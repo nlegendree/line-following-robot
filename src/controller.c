@@ -3,10 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <dirent.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <linux/input.h>
+#include <libevdev/libevdev.h>
+#include <libevdev/libevdev-uinput.h>
 
 char *eventPath() {
     DIR *dir;
@@ -42,9 +45,48 @@ char *eventPath() {
         }
     }
 
-    if (event_path_output != NULL)
-        printf("%s : %s\n",event_name,event_path_output);
-
     closedir(dir);
     return event_path_output; 
+}
+
+struct libevdev *initController() {
+    struct libevdev *dev = NULL;
+    int fd = open(eventPath(), O_RDONLY);
+    int rc = libevdev_new_from_fd(fd, &dev);
+    if (rc < 0) {
+        fprintf(stderr, "Failed to init libevdev (%s)\n", strerror(-rc));
+        exit(1);
+    }
+    return dev;
+}
+
+int buttonIsPressed(int BUTTON, struct libevdev *controller,struct input_event ev,int *state) {
+    int code = libevdev_event_is_code(&ev, EV_KEY, BUTTON);
+    int value = libevdev_get_event_value(controller, EV_KEY, BUTTON);
+    if (code && value)
+        *state = 1;
+    else if (code && !value)
+        *state = 0;
+    return *state;
+}
+
+int triggerValue(int TRIGGER, struct libevdev *controller,struct input_event ev,int *state) {
+    int code = libevdev_event_is_code(&ev, EV_ABS, TRIGGER);
+    int value = libevdev_get_event_value(controller, EV_ABS, TRIGGER);
+    if (code && value > 0)
+        *state = value;
+    else if (code && value == 0)
+        *state = 0;
+    return *state;
+}
+
+int axisValue(int AXIS, struct libevdev *controller,struct input_event ev,int *state) {
+    int code = libevdev_event_is_code(&ev, EV_ABS, AXIS);
+    int value = libevdev_get_event_value(controller, EV_ABS, AXIS);
+    if (code && (value <= (MID_AXIS - DEADZONE) || value >= (MID_AXIS + DEADZONE)))
+        *state = value;
+    else if (code && (value > (MID_AXIS - DEADZONE) && value < (MID_AXIS + DEADZONE)))
+        *state = MID_AXIS;
+    return *state;
+
 }
