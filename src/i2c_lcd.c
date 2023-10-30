@@ -27,20 +27,3 @@ int initLCD() {
     return lcd;
 
 }
-
-int exempleASupprimer() {   
-    
-    int lcd = initLCD();
-
-    float temp = 123.34244;
-
-    while(1)
-    {   
-
-	lcdClear(lcd);
-	lcdPrintf(lcd,"%f.2",temp);
-
-    }
-    
-    return 0; 
-}		
