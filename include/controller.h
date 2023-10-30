@@ -4,7 +4,7 @@
 #include <libevdev/libevdev.h>
 #include <libevdev/libevdev-uinput.h>
 
-#define DEVICE_NAME "Controller" // Part of the name specified in command 'evtest'
+#define DEVICE_NAME "Controller" // Part of the name specified in the 'evtest' command
 
 #define BUTTON_CROSS BTN_SOUTH
 #define BUTTON_SQUARE BTN_WEST
