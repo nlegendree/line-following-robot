@@ -10,7 +10,7 @@ void initDistanceSensor() {
     pinMode(PIN_TRIG, OUTPUT);
     pinMode(PIN_ECHO, INPUT);
 
-    // Initializing Trig signal with low input
+    // Initializing Trig with low input
     digitalWrite(PIN_TRIG, LOW);
 }
 
