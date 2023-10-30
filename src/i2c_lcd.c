@@ -28,8 +28,6 @@ int initLCD() {
 
 }
 
-void printfLCD()
-
 int exempleASupprimer() {   
     
     int lcd = initLCD();

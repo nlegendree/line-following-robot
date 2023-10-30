@@ -15,7 +15,7 @@
 #define        AF_DB6               (AF_BASE + 6)
 #define        AF_DB7               (AF_BASE + 7)
 
-void initLCD();
+int initLCD();
 
 
 #endif
