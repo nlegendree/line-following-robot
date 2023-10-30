@@ -1,4 +1,4 @@
-#include "i2c_lcd.h"
+#include "i2cLCD.h"
 
 #include <wiringPi.h>
 #include <pcf8574.h>
