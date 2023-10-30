@@ -27,10 +27,11 @@ int main() {
     int R2state = 0;
     int LXstate = MID_AXIS;
     while (1) {
+        libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
+
         system("clear");
         lcdClear(lcd);
         
-        libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
         if (buttonIsPressed(BUTTON_CROSS,controller,ev,&Xstate)) {
             printf("X is pressed\n");
         }
