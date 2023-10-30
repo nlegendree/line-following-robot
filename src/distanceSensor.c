@@ -6,14 +6,12 @@
 
 
 
-void setup() {
-    wiringPiSetup();
+void initDistanceSensor() {
     pinMode(PIN_TRIG, OUTPUT);
     pinMode(PIN_ECHO, INPUT);
-    
-    // Initialiser le signal Trig à basse impulsion
+
+    // Initializing Trig signal with low input
     digitalWrite(PIN_TRIG, LOW);
-    delay(2);
 }
 
 int getDistance() {
