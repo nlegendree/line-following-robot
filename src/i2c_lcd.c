@@ -6,14 +6,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void initLCD() {
+int initLCD() {
 
     int i;
 
     pcf8574Setup(AF_BASE,I2C_ADDRESS);
     
-    if (lcdInit (2, 16, 4, AF_RS, AF_E, AF_DB4,AF_DB5,AF_DB6,AF_DB7, 0,0,0,0) < 0)
-    {
+    lcd = lcdInit (2, 16, 4, AF_RS, AF_E, AF_DB4,AF_DB5,AF_DB6,AF_DB7, 0,0,0,0);
+
+    if (lcd < 0) {
         fprintf (stderr, "lcdInit failed\n") ;
         exit (EXIT_FAILURE) ;
     }
@@ -23,20 +24,23 @@ void initLCD() {
     digitalWrite(AF_LED,1);
     digitalWrite(AF_RW,0);
 
+    return lcd;
+
 }
+
+void printfLCD()
 
 int exempleASupprimer() {   
     
-    initLCD();
+    int lcd = initLCD();
 
     float temp = 123.34244;
-    int handle;
 
     while(1)
     {   
 
-	lcdClear(handle);
-	lcdPrintf(handle,"%f.2",temp);
+	lcdClear(lcd);
+	lcdPrintf(lcd,"%f.2",temp);
 
     }
     
