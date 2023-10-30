@@ -29,6 +29,9 @@ int exempleASupprimer() {
     
     initLCD();
 
+    float temp = 123.34244;
+    int handle;
+
     while(1)
     {   
 
