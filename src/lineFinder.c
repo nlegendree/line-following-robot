@@ -1,7 +1,7 @@
+#include "gpio_pin.h"
+
 #include <wiringPi.h>
 #include <stdio.h>
-
-#define LINE_FINDER_PIN 17 // Utilisez le numéro de la broche GPIO correct
 
 int main(void) {
     if (wiringPiSetupGpio() == -1) {
@@ -9,10 +9,10 @@ int main(void) {
         return 1;
     }
 
-    pinMode(LINE_FINDER_PIN, INPUT);
+    pinMode(PIN_LINEFINDER, INPUT);
 
     while (1) {
-        int lineDetected = digitalRead(LINE_FINDER_PIN);
+        int lineDetected = digitalRead(PIN_LINEFINDER);
 
         if (lineDetected == LOW) {
             printf("Ligne détectée\n");

@@ -11,13 +11,7 @@ int main() {
 
     //Controller Initialization
     struct libevdev *controller = initController();
-    if (controller != NULL) {
-        printf("Input device name : \"%s\"\n", libevdev_get_name(controller));
-    }
-    else {
-        printf("Failed to detect controller.");
-        exit(1);
-    }
+    printf("Input device name : \"%s\"\n", libevdev_get_name(controller));
 
     //Controller Detection
     int Xstate = 0;

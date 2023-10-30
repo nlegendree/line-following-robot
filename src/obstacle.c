@@ -1,30 +1,31 @@
+#include "gpio_pin.h"
+
 #include <stdio.h>
 #include <wiringPi.h>
 #include <unistd.h>
 
-#define TRIG_PIN 17  // GPIO pin pour le signal Trig
-#define ECHO_PIN 18  // GPIO pin pour le signal Echo
+
 
 void setup() {
     wiringPiSetup();
-    pinMode(TRIG_PIN, OUTPUT);
-    pinMode(ECHO_PIN, INPUT);
+    pinMode(PIN_TRIG, OUTPUT);
+    pinMode(PIN_ECHO, INPUT);
     
     // Initialiser le signal Trig à basse impulsion
-    digitalWrite(TRIG_PIN, LOW);
+    digitalWrite(PIN_TRIG, LOW);
     delay(2);
 }
 
 int getDistance() {
-    digitalWrite(TRIG_PIN, HIGH);
+    digitalWrite(PIN_TRIG, HIGH);
     delayMicroseconds(10);
-    digitalWrite(TRIG_PIN, LOW);
+    digitalWrite(PIN_TRIG, LOW);
     
-    while (digitalRead(ECHO_PIN) == LOW)
+    while (digitalRead(PIN_ECHO) == LOW)
         ;
     long startTime = micros();
     
-    while (digitalRead(ECHO_PIN) == HIGH)
+    while (digitalRead(PIN_ECHO) == HIGH)
         ;
     long endTime = micros();
     
