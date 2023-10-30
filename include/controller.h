@@ -4,7 +4,7 @@
 #include <libevdev/libevdev.h>
 #include <libevdev/libevdev-uinput.h>
 
-#define DEVICE_NAME "Controller" // Partie du nom spécifié par la commande 'evtest'
+#define DEVICE_NAME "Controller" // Part of the name specified in command 'evtest'
 
 #define BUTTON_CROSS BTN_SOUTH
 #define BUTTON_SQUARE BTN_WEST
@@ -17,7 +17,7 @@
 
 #define MAX_AXIS 255
 #define MID_AXIS MAX_AXIS/2
-#define DEADZONE_PERCENT 12 //Deadzone percentage
+#define DEADZONE_PERCENT 12 // Deadzone percentage
 #define DEADZONE (int)(DEADZONE_PERCENT/100.0*MID_AXIS) 
 #define AXIS_LX ABS_X
 #define AXIS_LY ABS_Y
