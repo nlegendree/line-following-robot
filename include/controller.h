@@ -26,7 +26,9 @@
 #define AXIS_RY ABS_RY
 
 struct libevdev *initController();
-int buttonIsPressed(int BUTTON, struct libevdev *controller,struct input_event ev,int *state);
+int buttonIsPressed(int BUTTON, struct libevdev *controller,struct input_event ev);
+int buttonIsReleased(int BUTTON, struct libevdev *controller,struct input_event ev);
+int buttonIsBeingPressed(int BUTTON, struct libevdev *controller,struct input_event ev,int *state);
 int triggerValue(int TRIGGER, struct libevdev *controller,struct input_event ev,int *state);
 int axisValue(int AXIS, struct libevdev *controller,struct input_event ev,int *state);
 

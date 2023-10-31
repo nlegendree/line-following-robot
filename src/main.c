@@ -1,5 +1,5 @@
 #include "controller.h"
-#include "i2c_lcd.h"
+#include "i2cLCD.h"
 
 #include <libevdev/libevdev.h>
 #include <libevdev/libevdev-uinput.h>
@@ -32,7 +32,7 @@ int main() {
         system("clear");
         lcdClear(lcd);
         
-        if (buttonIsPressed(BUTTON_CROSS,controller,ev,&Xstate)) {
+        if (buttonIsBeingPressed(BUTTON_CROSS,controller,ev,&Xstate)) {
             printf("X is pressed\n");
         }
 
