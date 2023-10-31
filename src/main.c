@@ -32,8 +32,17 @@ int main() {
         system("clear");
         lcdClear(lcd);
         
-        if (buttonIsBeingPressed(BUTTON_CROSS,controller,ev,&Xstate)) {
-            printf("X is pressed\n");
+        // Mode suiveur de ligne
+        if (buttonIsPressed(BUTTON_CROSS,controller,ev)) { // Appuyer sur CROIX pour entrer dans le mode suiveur de ligne
+            while(!buttonIsPressed(BUTTON_CIRCLE,controller,ev)) { // Appuyer sur ROND pour quitter le mode suiveur de ligne
+                libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
+                // Actions
+            }
+        }
+
+        // Mode manuel
+        if (buttonIsBeingPressed(BUTTON_SQUARE,controller,ev,&Xstate)) {
+            printf("SQUARE is pressed\n");
         }
 
         int L2 = triggerValue(TRIGGER_L2,controller,ev,&L2state);
