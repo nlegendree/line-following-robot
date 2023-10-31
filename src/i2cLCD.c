@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int initLCD() {
+int lcdInit() {
 
     int i;
 
@@ -25,5 +25,17 @@ int initLCD() {
     digitalWrite(AF_RW,0);
 
     return lcd;
+
+}
+
+void lcdClear() {
+
+}
+
+void lcdSetCursor(int row, int col) {
+
+}
+
+void lcdWrite(const char *message) {
 
 }

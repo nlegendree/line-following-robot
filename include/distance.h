@@ -1,5 +1,5 @@
-#ifndef __DISTANCESENSOR__
-#define __DISTANCESENSOR__
+#ifndef __DISTANCE__
+#define __DISTANCE__
 
 
 void initDistanceSensor();

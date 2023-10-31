@@ -3,7 +3,8 @@
 
 
 void initBuzzer();
-void buzzerMode(int high_low);
+void buzzerOn();
+void buzzerOff();
 
 
 #endif

@@ -1,12 +1,15 @@
+#include <wiringPi.h>
 #include "gpio_pin.h"
 #include "buzzer.h"
-
-#include <wiringPi.h>
 
 void initBuzzer() {
     pinMode(PIN_BUZZER, OUTPUT);
 }
 
-void buzzerMode(int high_low) {
-    digitalWrite(PIN_BUZZER,high_low);
+void buzzerOn() {
+    digitalWrite(PIN_BUZZER, HIGH)
+}
+
+void buzzerOff() {
+    digitalWrite(PIN_BUZZER, LOW)
 }

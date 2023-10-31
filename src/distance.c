@@ -1,0 +1,29 @@
+#include <wiringPi.h>
+#include <stdio.h>
+#include <time.h>
+#include "distance.h"
+#include "gpio_pin.h"
+
+#define SOUND_SPEED 34300
+
+void initDistanceSensor() {
+    pinMode(PIN_TRIG, OUTPUT);
+    pinMode(PIN_ECHO, INPUT);
+}
+
+int getDistance() {
+    digitalWrite(PIN_TRIG, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(PIN_TRIG, LOW);
+    
+    while (digitalRead(PIN_ECHO) == LOW);
+        long startTime = micros();
+    
+    while (digitalRead(PIN_ECHO) == HIGH);
+        long endTime = micros();
+    
+    long travelTime = endTime - startTime;
+    int distance = travelTime/2*SOUND_SPEED;
+    
+    return distance;
+}
