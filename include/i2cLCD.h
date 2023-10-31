@@ -16,9 +16,6 @@
 #define        AF_DB7               (AF_BASE + 7)
 
 int lcdInit();
-void lcdClear();
-void lcdSetCursor();
-void lcdWrite();
 
 
 #endif

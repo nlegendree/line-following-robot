@@ -27,15 +27,3 @@ int lcdInit() {
     return lcd;
 
 }
-
-void lcdClear() {
-
-}
-
-void lcdSetCursor(int row, int col) {
-
-}
-
-void lcdWrite(const char *message) {
-
-}
