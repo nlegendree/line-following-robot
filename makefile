@@ -7,9 +7,13 @@ CC=gcc
 CFLAGS=-Wall -pedantic -I$(INCLUDEDIR) -I$(LEVDEVDIR)
 LIBS=-levdev -lwiringPi -lwiringPiDev
 
+SRCS := $(wildcard $(SRCDIR)/*.c)
+
+OBJS := $(SRCS:%.c=%.o)
+
 all : $(BINDIR)/$(EXEC)
 
-$(BINDIR)/$(EXEC) : $(SRCDIR)/main.o $(SRCDIR)/buzzer.o $(SRCDIR)/controller.o $(SRCDIR)/distance.o $(SRCDIR)/i2cLCD.o $(SRCDIR)/lineFinder.o $(SRCDIR)/obstacle.o $(SRCDIR)/suiveurDeLigne.o
+$(BINDIR)/$(EXEC) : $(OBJS)
 	$(CC) -o $@ $(SRCDIR)/*.o $(LIBS)
 
 $(SRCDIR)/%.o : $(SRCDIR)/%.c
