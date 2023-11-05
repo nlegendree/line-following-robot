@@ -1,10 +1,11 @@
-#include "moteur.h"
+#include "moteurs.h"
 #include "i2cLCD.h"
 #include "buzzer.h"
 #include "gpio_pin.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 void initSuiveurLigne() {
     pinMode(PIN_SUIVEUR_GAUCHE, INPUT);
@@ -21,19 +22,18 @@ bool detecterIntersection(bool gauche, bool centre, bool droite){
     return (gauche && centre && droite) || (gauche && centre) || (centre && droite);
 }
 
-bool detecterIntersectionEnT(bool gauche, bool centre, bool droite){
+bool detecterIntersectionEnT(bool gauche, bool droite){
     return gauche && droite;
 }
 
 
-void suivreLigne(int pin_capteur_gauche, int pin_capteur_centre, int pin_capteur_droit){
+bool suivreLigne(int pin_capteur_gauche, int pin_capteur_centre, int pin_capteur_droit){
     
     bool gauche = detecterLigne(pin_capteur_gauche);
     bool centre = detecterLigne(pin_capteur_centre);
     bool droite = detecterLigne(pin_capteur_droit);
-    bool intersection = detecterIntersection(pin_capteur_gauche,pin_capteur_centre, pin_capteur_droit)
 
-    if (detecterIntersection(gauche,centre,droite) || centre || !(gauche,centre,droite)) // si aucun capteur n'a detecte la ligne, on avance quand meme
+    if (detecterIntersection(gauche,centre,droite) || centre || !(gauche && centre && droite)) // si aucun capteur n'a detecte la ligne, on avance quand meme
         avancer();
     else if (gauche){
         tournerGauche();
@@ -41,7 +41,9 @@ void suivreLigne(int pin_capteur_gauche, int pin_capteur_centre, int pin_capteur
     else if (droite){
         tournerDroite();
     }
-    else if(detecterIntersectionEnT(gauche,centre,droite)){ // on considere que la fin du parcours est marquée par une intersection en T
-        arreter();
+    else if(detecterIntersectionEnT(gauche,droite)){ // on considere que la fin du parcours est marquée par une intersection en T
+        return 0;
     }
+
+    return 1; // Continuer à suivre la ligne
 }

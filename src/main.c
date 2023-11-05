@@ -1,5 +1,6 @@
 #include "controller.h"
 #include "i2cLCD.h"
+#include "gpio_pin.h"
 
 #include <libevdev/libevdev.h>
 #include <libevdev/libevdev-uinput.h>
@@ -14,6 +15,9 @@ int main() {
 
     // LCD Initialization
     int lcd = initLCD();
+
+    // Line-Finder Initialization
+    initSuiveurLigne();
 
     // Controller Initialization
     struct libevdev *controller = initController();
@@ -32,15 +36,14 @@ int main() {
         system("clear");
         lcdClear(lcd);
         
-        // Mode suiveur de ligne
-        if (buttonIsPressed(BUTTON_CROSS,controller,ev)) { // Appuyer sur CROIX pour entrer dans le mode suiveur de ligne
-            while(!buttonIsPressed(BUTTON_CIRCLE,controller,ev)) { // Appuyer sur ROND pour quitter le mode suiveur de ligne
+        // Line-Finder Mode
+        if (buttonIsPressed(BUTTON_CROSS,controller,ev)) { // Press CROSS to enter Line-Finder Mode
+            while(suivreLigne(PIN_SUIVEUR_GAUCHE,PIN_SUIVEUR_CENTRE,PIN_SUIVEUR_DROIT) && !buttonIsPressed(BUTTON_CIRCLE,controller,ev)) { // Press CIRCLE to leave Line-Finder Mode
                 libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
-                // Actions
             }
         }
 
-        // Mode manuel
+        // Manual Mode
         if (buttonIsBeingPressed(BUTTON_SQUARE,controller,ev,&Xstate)) {
             printf("SQUARE is pressed\n");
         }
