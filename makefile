@@ -8,7 +8,6 @@ CFLAGS=-Wall -pedantic -I$(INCLUDEDIR) -I$(LEVDEVDIR)
 LIBS=-levdev -lwiringPi -lwiringPiDev
 
 SRCS := $(wildcard $(SRCDIR)/*.c)
-
 OBJS := $(SRCS:%.c=%.o)
 
 all : $(BINDIR)/$(EXEC)
