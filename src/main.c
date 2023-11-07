@@ -15,12 +15,12 @@ int firstLoop = TRUE;
 
 void manualControl() {
     if (firstLoop) {
+        firstLoop = FALSE;
+
         int Xstate = 0;
         int L2state = 0;
         int R2state = 0;
         int LXstate = MID_AXIS;
-
-        firstLoop = FALSE;
     }
 
     if (buttonIsBeingPressed(BUTTON_SQUARE,controller,ev,&Xstate)) {
