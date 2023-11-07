@@ -39,12 +39,14 @@ int main() {
         system("clear");
         lcdClear(lcd);
         
+
         // Line-Finder Mode
         if (buttonIsPressed(BUTTON_CROSS,controller,ev)) { // Press CROSS to enter Line-Finder Mode
             while(!buttonIsPressed(BUTTON_CIRCLE,controller,ev) && suivreLigne(PIN_SUIVEUR_GAUCHE,PIN_SUIVEUR_CENTRE,PIN_SUIVEUR_DROIT)) { // Press CIRCLE to leave Line-Finder Mode
                 libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
             }
         }
+
 
         // Manual Mode
         if (buttonIsBeingPressed(BUTTON_SQUARE,controller,ev,&Xstate)) {
@@ -66,6 +68,7 @@ int main() {
         if (LX != MID_AXIS) {
             printf("AXIS LEFT X : %d\n",LX);
         }
+
 
         delay(10);
     }
