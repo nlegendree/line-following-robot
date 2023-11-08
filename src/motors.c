@@ -19,8 +19,8 @@ void initMotors() {
 void forward(int R2) {
     pwmWrite(PIN_M1B,0);
     pwmWrite(PIN_M2B,0);
-    pwmWrite(PIN_M1A, (int)(R2*1024)/MAX_TRIGGER);
-    pwmWrite(PIN_M2A, (int)(R2*1024)/MAX_TRIGGER);
+    pwmWrite(PIN_M1A,(int)(R2*1024)/MAX_TRIGGER);
+    pwmWrite(PIN_M2A,(int)(R2*1024)/MAX_TRIGGER);
 }
 
 // Fonction pour faire reculer le moteur
