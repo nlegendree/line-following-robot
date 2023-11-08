@@ -20,13 +20,12 @@ void manualControl(
 {
     int L2 = triggerValue(TRIGGER_L2,controller,ev,L2state);
     if (L2 > 0) {
-        printf("L2 : %d\n",L2);
-        lcdPrintf(lcd,"L2 : %d\n",L2);
+        printf("R2, PWM_R2 : %d, %d\n",L2,(int)(L2*1024)/255);
     }
 
     int R2 = triggerValue(TRIGGER_R2,controller,ev,R2state);
     if (R2 > 0) {
-        printf("R2 : %d\n",R2);
+        printf("R2, PWM_R2 : %d, %d\n",R2,(int)(R2*1024)/255);
     }
 
     int LX = axisValue(AXIS_LX,controller,ev,LXstate);
@@ -47,7 +46,6 @@ int main() {
     struct libevdev *controller = initController();
     printf("Input device name : \"%s\"\n", libevdev_get_name(controller));
     getchar();
-
 
     // Event States Initialization
     int L2state = 0;

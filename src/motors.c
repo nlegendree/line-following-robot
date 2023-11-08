@@ -15,42 +15,42 @@ void initMotors() {
 
 // Fonction pour faire avancer le moteur
 void forward(int R2) {
-    digitalWrite(M1B, LOW);
-    digitalWrite(M2B, LOW);
-    pwmWrite(M1A, (int)(R2*1024)/256);
-    pwmWrite(M2A, (int)(R2*1024)/256);
+    pwmWrite(PIN_M1B,0);
+    pwmWrite(PIN_M2B,0);
+    pwmWrite(PIN_M1A, (int)(R2*1024)/255);
+    pwmWrite(PIN_M2A, (int)(R2*1024)/255);
 }
 
-/*
 // Fonction pour faire reculer le moteur
-void reverse() {
-    digitalWrite(MOTOR_PIN1, LOW);
-    digitalWrite(MOTOR_PIN2, HIGH);
-    pwmWrite(PWM_PIN, 512);  // 50% de puissance
+void backward(int L2) {
+    pwmWrite(PIN_M1A,0);
+    pwmWrite(PIN_M2A,0);
+    pwmWrite(PIN_M1B,(int)(L2*1024)/255);
+    pwmWrite(PIN_M2B,(int)(L2*1024)/255);
 }
 
 // Fonction pour arrêter le moteur
 void stop() {
-    digitalWrite(MOTOR_PIN1, LOW);
-    digitalWrite(MOTOR_PIN2, LOW);
-    pwmWrite(PWM_PIN, 0);  // PWM à zéro pour arrêter le moteur
+    pwmWrite(PIN_M1B,0);
+    pwmWrite(PIN_M2B,0);
+    pwmWrite(PIN_M1A,0);
+    pwmWrite(PIN_M2A,0);
 }
-
-void turnRight(int angle) {
-    
-   
-
-}
-*/
 
 
 int main() {
 	wiringPiSetupGpio();
-    init();  // Initialisation
-	while(1) {
-		forward(255);
-	}
+    initMotors();  // Initialisation
 
+    forward(200);
+    
+    delay(2000);
+
+    backward(200);
+    
+    delay(2000);
+
+    stop();
 
     return 0;
 }

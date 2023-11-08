@@ -18,7 +18,7 @@
 
 #define MAX_AXIS 255
 #define MID_AXIS MAX_AXIS/2
-#define DEADZONE_PERCENT 12 // Deadzone percentage
+#define DEADZONE_PERCENT 15 // Deadzone percentage
 #define DEADZONE (int)(DEADZONE_PERCENT/100.0*MID_AXIS) 
 #define AXIS_LX ABS_X
 #define AXIS_LY ABS_Y
