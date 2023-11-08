@@ -1,6 +1,7 @@
 #include "controller.h"
 #include "i2cLCD.h"
 #include "gpioPins.h"
+#include "lineFinder.h"
 
 #include <libevdev/libevdev.h>
 #include <libevdev/libevdev-uinput.h>
