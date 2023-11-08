@@ -1,5 +1,5 @@
 #include "motors.h"
-#include "gpio_pin.h"
+#include "gpioPins.h"
 #include "controller.h"
 
 #include <wiringPi.h>

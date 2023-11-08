@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "distance.h"
-#include "gpio_pin.h"
+#include "gpioPins.h"
 
 #define SOUND_SPEED 34300
 

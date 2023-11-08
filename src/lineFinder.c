@@ -2,7 +2,7 @@
 #include "motors.h"
 #include "i2cLCD.h"
 #include "buzzer.h"
-#include "gpio_pin.h"
+#include "gpioPins.h"
 
 #include <wiringPi.h>
 #include <stdio.h>

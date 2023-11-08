@@ -1,5 +1,5 @@
 #include "buzzer.h"
-#include "gpio_pin.h"
+#include "gpioPins.h"
 
 #include <wiringPi.h>
 
