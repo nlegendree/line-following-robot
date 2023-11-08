@@ -6,13 +6,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int lcdInit() {
+int initLCD() {
 
     int i;
 
     pcf8574Setup(AF_BASE,I2C_ADDRESS);
     
-    lcd = lcdInit (2, 16, 4, AF_RS, AF_E, AF_DB4,AF_DB5,AF_DB6,AF_DB7, 0,0,0,0);
+    int lcd = lcdInit(2, 16, 4, AF_RS, AF_E, AF_DB4,AF_DB5,AF_DB6,AF_DB7, 0,0,0,0);
 
     if (lcd < 0) {
         fprintf (stderr, "lcdInit failed\n") ;
