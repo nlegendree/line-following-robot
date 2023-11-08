@@ -36,12 +36,12 @@ bool suivreLigne(int pin_capteur_gauche, int pin_capteur_centre, int pin_capteur
     bool droite = detecterLigne(pin_capteur_droit);
 
     if (detecterIntersection(gauche,centre,droite) || centre || !(gauche && centre && droite)) // si aucun capteur n'a detecte la ligne, on avance quand meme
-        avancer();
+        ; // avancer();
     else if (gauche){
-        tournerGauche();
+        ; // tournerGauche();
     }
     else if (droite){
-        tournerDroite();
+        ; // tournerDroite();
     }
     else if(detecterIntersectionEnT(gauche,droite)){ // on considere que la fin du parcours est marquée par une intersection en T
         return 0;
