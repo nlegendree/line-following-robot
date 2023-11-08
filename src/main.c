@@ -11,6 +11,30 @@
 #include <fcntl.h>
 #include <string.h>
 
+void manualControl(
+        struct libevdev *controller,
+        struct input_event ev,
+        int *L2state,
+        int *R2state,
+        int *LXstate) 
+{
+    int L2 = triggerValue(TRIGGER_L2,controller,ev,L2state);
+    if (L2 > 0) {
+        printf("L2 : %d\n",L2);
+        lcdPrintf(lcd,"L2 : %d\n",L2);
+    }
+
+    int R2 = triggerValue(TRIGGER_R2,controller,ev,R2state);
+    if (R2 > 0) {
+        printf("R2 : %d\n",R2);
+    }
+
+    int LX = axisValue(AXIS_LX,controller,ev,LXstate);
+    if (LX != MID_AXIS) {
+        printf("AXIS LEFT X : %d\n",LX);
+    }
+}
+
 int main() {
 
     // LCD Initialization
@@ -26,7 +50,6 @@ int main() {
 
 
     // Event States Initialization
-    int Xstate = 0;
     int L2state = 0;
     int R2state = 0;
     int LXstate = MID_AXIS;
@@ -49,25 +72,7 @@ int main() {
 
 
         // Manual Mode
-        if (buttonIsBeingPressed(BUTTON_SQUARE,controller,ev,&Xstate)) {
-            printf("SQUARE is pressed\n");
-        }
-
-        int L2 = triggerValue(TRIGGER_L2,controller,ev,&L2state);
-        if (L2 > 0) {
-            printf("L2 : %d\n",L2);
-            lcdPrintf(lcd,"L2 : %d\n",L2);
-        }
-
-        int R2 = triggerValue(TRIGGER_R2,controller,ev,&R2state);
-        if (R2 > 0) {
-            printf("R2 : %d\n",R2);
-        }
-
-        int LX = axisValue(AXIS_LX,controller,ev,&LXstate);
-        if (LX != MID_AXIS) {
-            printf("AXIS LEFT X : %d\n",LX);
-        }
+        manualControl(controller,ev,&L2state,&R2state,&LXstate);
 
 
         delay(10);
