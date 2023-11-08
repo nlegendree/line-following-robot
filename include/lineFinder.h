@@ -4,10 +4,10 @@
 
 #include <stdbool.h>
 
-void initSuiveurLigne()
+void initSuiveurLigne();
 bool detecterLigne(int pin_linefinder);
-bool detecterIntersection(int pin_capteur_gauche, int pin_capteur_centre, int pin_capteur_droit);
-bool detecterIntersectionEnT(bool gauche, bool centre, bool droite);
+bool detecterIntersection(bool gauche, bool centre, bool droite);
+bool detecterIntersectionEnT(bool gauche, bool droite);
 bool suivreLigne(int pin_capteur_gauche, int pin_capteur_centre, int pin_capteur_droit);
 
 
