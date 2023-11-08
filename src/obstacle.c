@@ -1,7 +1,7 @@
 #include "obstacle.h"
 #include "distance.h"
 #include "buzzer.h"
-#include "i2cLCD.h"
+#include "lcd.h"
 
 #include <wiringPi.h>
 
