@@ -3,8 +3,8 @@
 
 
 void initMotors();
-void forward(int R2);
-void backward(int L2);
+void forward(int R2, int leftAxis);
+void backward(int L2, int leftAxis);
 void stop();
 void LF_forward();
 void LF_turnLeft();

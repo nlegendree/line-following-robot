@@ -17,7 +17,7 @@ void initMotors() {
 }
 
 // Fonction pour faire avancer le moteur
-void forward(int R2) {
+void forward(int R2, int leftAxis) {
     pinMode(PIN_M1A,PWM_OUTPUT);
 	pinMode(PIN_M1B,OUTPUT);
 	pinMode(PIN_M2A,PWM_OUTPUT);
@@ -30,7 +30,7 @@ void forward(int R2) {
 }
 
 // Fonction pour faire reculer le moteur
-void backward(int L2) {
+void backward(int L2, int leftAxis) {
     pinMode(PIN_M1A,OUTPUT);
 	pinMode(PIN_M1B,PWM_OUTPUT);
 	pinMode(PIN_M2A,OUTPUT);
@@ -75,11 +75,11 @@ int main_test() {
 	wiringPiSetupGpio();
     initMotors();  // Initialisation
 
-    forward(200);
+    forward(200,MID_AXIS);
     
     delay(2000);
 
-    backward(200);
+    backward(200,MID_AXIS);
     
     delay(2000);
 

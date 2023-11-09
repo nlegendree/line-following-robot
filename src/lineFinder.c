@@ -29,23 +29,21 @@ bool detecterIntersectionEnT(bool gauche, bool droite){
 }
 
 
-bool suivreLigne(int pin_capteur_gauche, int pin_capteur_centre, int pin_capteur_droit){
+void lineFinder(){
     
-    bool gauche = detecterLigne(pin_capteur_gauche);
-    bool centre = detecterLigne(pin_capteur_centre);
-    bool droite = detecterLigne(pin_capteur_droit);
+    bool gauche = detecterLigne(PIN_SUIVEUR_GAUCHE);
+    bool centre = detecterLigne(PIN_SUIVEUR_CENTRE);
+    bool droite = detecterLigne(PIN_SUIVEUR_DROIT);
 
-    if (detecterIntersection(gauche,centre,droite) || centre || !(gauche && centre && droite)) // si aucun capteur n'a detecte la ligne, on avance quand meme
-        ; // avancer();
+    if (detecterIntersection(gauche,centre,droite) || centre || !(gauche && centre && droite)) // Si aucun capteur n'a detecte la ligne, on avance quand meme
+        LF_forward();
     else if (gauche){
-        ; // tournerGauche();
+        LF_turnLeft();
     }
     else if (droite){
-        ; // tournerDroite();
+        LF_turnRight();
     }
-    else if(detecterIntersectionEnT(gauche,droite)){ // on considere que la fin du parcours est marquée par une intersection en T
-        return 0;
+    else if(detecterIntersectionEnT(gauche,droite)){ // On considere que la fin du parcours est marquée par une intersection en T
+        stop();
     }
-
-    return 1; // Continuer à suivre la ligne
 }

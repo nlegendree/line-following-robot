@@ -2,6 +2,7 @@
 #include "i2cLCD.h"
 #include "gpioPins.h"
 #include "lineFinder.h"
+#include "motors.h"
 
 #include <libevdev/libevdev.h>
 #include <libevdev/libevdev-uinput.h>
@@ -20,18 +21,13 @@ void manualControl(
         int *LXstate) 
 {
     int L2 = triggerValue(TRIGGER_L2,controller,ev,L2state);
-    if (L2 > 0) {
-        printf("R2, PWM_R2 : %d, %d\n",L2,(int)(L2*1024)/255);
-    }
-
-    int R2 = triggerValue(TRIGGER_R2,controller,ev,R2state);
-    if (R2 > 0) {
-        printf("R2, PWM_R2 : %d, %d\n",R2,(int)(R2*1024)/255);
-    }
-
     int LX = axisValue(AXIS_LX,controller,ev,LXstate);
-    if (LX != MID_AXIS) {
-        printf("AXIS LEFT X : %d\n",LX);
+    if (L2 > 0) {
+        backward(L2,LX);
+    }
+    else {
+        int R2 = triggerValue(TRIGGER_R2,controller,ev,R2state);
+        frontward(R2,LX);
     }
 }
 
@@ -57,20 +53,20 @@ int main() {
     struct input_event ev;
     while (1) {
         libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
-
-        system("clear");
         lcdClear(lcd);
-        
+
 
         // Line-Finder Mode
         if (buttonIsPressed(BUTTON_CROSS,controller,ev)) { // Press CROSS to enter Line-Finder Mode
-            while(!buttonIsPressed(BUTTON_CIRCLE,controller,ev) && suivreLigne(PIN_SUIVEUR_GAUCHE,PIN_SUIVEUR_CENTRE,PIN_SUIVEUR_DROIT)) { // Press CIRCLE to leave Line-Finder Mode
+            while(!buttonIsPressed(BUTTON_CIRCLE,controller,ev)) { // Press CIRCLE to leave Line-Finder Mode
                 libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
+                lineFinder();
             }
         }
 
 
         // Manual Mode
+        lcdPrintf(lcd,"Manual Mode");
         manualControl(controller,ev,&L2state,&R2state,&LXstate);
 
 
