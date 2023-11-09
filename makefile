@@ -2,6 +2,7 @@ EXEC=rc
 SRCDIR=src
 BINDIR=bin
 INCLUDEDIR=include
+LATEXDIR=latex
 LEVDEVDIR=/usr/include/libevdev-1.0
 CC=gcc
 CFLAGS=-Wall -pedantic -I$(INCLUDEDIR) -I$(LEVDEVDIR)
@@ -21,3 +22,4 @@ $(SRCDIR)/%.o : $(SRCDIR)/%.c
 clean :
 	rm -f $(BINDIR)/*
 	rm -f $(SRCDIR)/*.o
+	rm -f $(LATEXDIR)/*.pdf $(LATEXDIR)/*.fls $(LATEXDIR)/*.fdb_latexmk $(LATEXDIR)/*.aux $(LATEXDIR)/*.log

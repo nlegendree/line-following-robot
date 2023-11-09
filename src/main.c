@@ -20,14 +20,14 @@ void manualControl(
         int *R2state,
         int *LXstate) 
 {
+    int R2 = triggerValue(TRIGGER_R2,controller,ev,R2state);
     int L2 = triggerValue(TRIGGER_L2,controller,ev,L2state);
     int LX = axisValue(AXIS_LX,controller,ev,LXstate);
-    if (L2 > 0) {
-        backward(L2,LX);
+    if (R2 >= L2) {
+        forward(R2-L2,LX);
     }
     else {
-        int R2 = triggerValue(TRIGGER_R2,controller,ev,R2state);
-        frontward(R2,LX);
+        backward(L2-R2,LX);
     }
 }
 

@@ -12,14 +12,8 @@
 #include <libevdev/libevdev-uinput.h>
 
 char *eventPath() {
-    DIR *dir;
-    struct dirent *entry;
-
-    dir = opendir("/dev/input/");
-    if (dir == NULL) {
-        perror("Impossible d'ouvrir le répertoire /dev/input/");
-        return NULL;
-    }
+    DIR *dir = opendir("/dev/input/");
+    struct dirent *entry; 
 
     char event_path[267];
     char event_name[267];
