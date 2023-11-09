@@ -6,10 +6,11 @@
 
 // Initialisation de la bibliothèque WiringPi
 void initMotors() {
-    pinMode(PIN_M1A,PWM_OUTPUT);
-	pinMode(PIN_M1B,PWM_OUTPUT);
-	pinMode(PIN_M2A,PWM_OUTPUT);
-	pinMode(PIN_M2B,PWM_OUTPUT);
+    pinMode(PIN_M1A,OUTPUT);
+	pinMode(PIN_M1B,OUTPUT);
+	pinMode(PIN_M2A,OUTPUT);
+	pinMode(PIN_M2B,OUTPUT);
+
     pwmSetMode(PWM_MODE_MS);
     pwmSetClock(400);    // Réglage de la fréquence PWM
     pwmSetRange(1024);   // Réglage de la plage PWM (0-1024)
@@ -17,26 +18,41 @@ void initMotors() {
 
 // Fonction pour faire avancer le moteur
 void forward(int R2) {
-    pwmWrite(PIN_M1B,0);
-    pwmWrite(PIN_M2B,0);
+    pinMode(PIN_M1A,PWM_OUTPUT);
+	pinMode(PIN_M1B,OUTPUT);
+	pinMode(PIN_M2A,PWM_OUTPUT);
+	pinMode(PIN_M2B,OUTPUT);
+
+    digitalWrite(PIN_M1B,LOW);
+    digitalWrite(PIN_M2B,LOW);
     pwmWrite(PIN_M1A,(int)(R2*1024)/MAX_TRIGGER);
     pwmWrite(PIN_M2A,(int)(R2*1024)/MAX_TRIGGER);
 }
 
 // Fonction pour faire reculer le moteur
 void backward(int L2) {
-    pwmWrite(PIN_M1A,0);
-    pwmWrite(PIN_M2A,0);
+    pinMode(PIN_M1A,OUTPUT);
+	pinMode(PIN_M1B,PWM_OUTPUT);
+	pinMode(PIN_M2A,OUTPUT);
+	pinMode(PIN_M2B,PWM_OUTPUT);
+
+    digitalWrite(PIN_M1A,LOW);
+    digitalWrite(PIN_M2A,LOW);
     pwmWrite(PIN_M1B,(int)(L2*1024)/MAX_TRIGGER);
     pwmWrite(PIN_M2B,(int)(L2*1024)/MAX_TRIGGER);
 }
 
 // Fonction pour arrêter le moteur
 void stop() {
-    pwmWrite(PIN_M1B,0);
-    pwmWrite(PIN_M2B,0);
-    pwmWrite(PIN_M1A,0);
-    pwmWrite(PIN_M2A,0);
+    pinMode(PIN_M1A,OUTPUT);
+	pinMode(PIN_M1B,OUTPUT);
+	pinMode(PIN_M2A,OUTPUT);
+	pinMode(PIN_M2B,OUTPUT);
+
+    digitalWrite(PIN_M1B,LOW);
+    digitalWrite(PIN_M2B,LOW);
+    digitalWrite(PIN_M1A,LOW);
+    digitalWrite(PIN_M2A,LOW);
 }
 
 // Fonction main test
