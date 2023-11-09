@@ -3,6 +3,8 @@
 #include "gpioPins.h"
 #include "lineFinder.h"
 #include "motors.h"
+#include "buzzer.h"
+#include "distance.h"
 
 #include <libevdev/libevdev.h>
 #include <libevdev/libevdev-uinput.h>
@@ -93,7 +95,7 @@ int main() {
         if (buttonIsPressed(BUTTON_CROSS,controller,ev)) { // Press CROSS to enter Line-Finder Mode
             while(!buttonIsPressed(BUTTON_CIRCLE,controller,ev)) { // Press CIRCLE to leave Line-Finder Mode
                 libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
-                lineFinder();
+                lineFinder(lcd);
             }
         }
 
