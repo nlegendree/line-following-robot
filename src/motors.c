@@ -55,6 +55,21 @@ void stop() {
     digitalWrite(PIN_M2A,LOW);
 }
 
+// Fonction pour faire avancer le moteur en mode suiveur de ligne
+void LF_forward() {
+
+}
+
+// Fonction pour faire tourner le moteur à gauche en mode suiveur de ligne
+void LF_turnLeft() {
+
+}
+
+// Fonction pour faire tourner le moteur à droite en mode suiveur de ligne
+void LF_turnRight() {
+
+}
+
 // Fonction main test
 int main_test() {
 	wiringPiSetupGpio();
