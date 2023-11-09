@@ -60,15 +60,15 @@ struct libevdev *initController() {
     return dev;
 }
 
-int buttonIsPressed(int BUTTON, struct libevdev *controller,struct input_event ev) {
+bool buttonIsPressed(int BUTTON, struct libevdev *controller, struct input_event ev) {
     return libevdev_event_is_code(&ev, EV_KEY, BUTTON) && libevdev_get_event_value(controller, EV_KEY, BUTTON);
 }
 
-int buttonIsReleased(int BUTTON, struct libevdev *controller,struct input_event ev) {
+bool buttonIsReleased(int BUTTON, struct libevdev *controller, struct input_event ev) {
     return libevdev_event_is_code(&ev, EV_KEY, BUTTON) && !libevdev_get_event_value(controller, EV_KEY, BUTTON);
 }
 
-int buttonIsBeingPressed(int BUTTON, struct libevdev *controller,struct input_event ev,int *state) {
+bool buttonIsBeingPressed(int BUTTON, struct libevdev *controller, struct input_event ev, bool *state) {
     int code = libevdev_event_is_code(&ev, EV_KEY, BUTTON);
     int value = libevdev_get_event_value(controller, EV_KEY, BUTTON);
     if (code && value)
@@ -78,7 +78,7 @@ int buttonIsBeingPressed(int BUTTON, struct libevdev *controller,struct input_ev
     return *state;
 }
 
-int triggerValue(int TRIGGER, struct libevdev *controller,struct input_event ev,int *state) {
+int triggerValue(int TRIGGER, struct libevdev *controller, struct input_event ev, int *state) {
     int code = libevdev_event_is_code(&ev, EV_ABS, TRIGGER);
     int value = libevdev_get_event_value(controller, EV_ABS, TRIGGER);
     if (code && value > 0)
@@ -88,7 +88,7 @@ int triggerValue(int TRIGGER, struct libevdev *controller,struct input_event ev,
     return *state;
 }
 
-int axisValue(int AXIS, struct libevdev *controller,struct input_event ev,int *state) {
+int axisValue(int AXIS, struct libevdev *controller, struct input_event ev, int *state) {
     int code = libevdev_event_is_code(&ev, EV_ABS, AXIS);
     int value = libevdev_get_event_value(controller, EV_ABS, AXIS);
     if (code && (value <= (MID_AXIS - DEADZONE) || value >= (MID_AXIS + DEADZONE)))
