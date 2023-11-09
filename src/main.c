@@ -13,6 +13,39 @@
 #include <fcntl.h>
 #include <string.h>
 
+bool obstacleDetect(int lcd) {
+    int distance = getDistance();
+
+    if (distance < 5) { //Bug si obstacle trop proche (ne devrait pas arriver) valeur à 1200 environ à vérifier en TP.
+        lcdClear(lcd);
+        lcdPrintf(lcd,"Obstacle proche!");
+        buzzerOn();
+
+        return 1;
+    }
+
+    lcdClear(lcd);
+    lcdPrintf(lcd,"Pas d'obstacle");
+    buzzerOff();
+
+    return 0;
+}
+
+void lineFinder(int lcd){
+    bool gauche = detecterLigne(PIN_SUIVEUR_GAUCHE);
+    bool centre = detecterLigne(PIN_SUIVEUR_CENTRE);
+    bool droite = detecterLigne(PIN_SUIVEUR_DROIT);
+
+    if (obstacleDetect(lcd) || detecterIntersectionEnT(gauche,droite)) // Intersection en T = fin du parcours
+        stop();
+    else if (detecterIntersection(gauche,centre,droite) || centre || !(gauche && centre && droite)) // Si aucun capteur n'a detecte la ligne, on avance quand meme
+        LF_forward();
+    else if (gauche)
+        LF_turnLeft();
+    else if (droite)
+        LF_turnRight();
+}
+
 void manualControl(
         struct libevdev *controller,
         struct input_event ev,
