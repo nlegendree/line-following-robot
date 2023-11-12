@@ -17,7 +17,7 @@ void initMotors() {
 }
 
 // Fonction pour faire avancer le moteur
-void forward(int R2, int leftAxis) {
+void forward(int speed, int angle) {
     pinMode(PIN_M1A,PWM_OUTPUT);
 	pinMode(PIN_M1B,OUTPUT);
 	pinMode(PIN_M2A,PWM_OUTPUT);
@@ -25,12 +25,12 @@ void forward(int R2, int leftAxis) {
 
     digitalWrite(PIN_M1B,LOW);
     digitalWrite(PIN_M2B,LOW);
-    pwmWrite(PIN_M1A,PWM_TRIGGER(R2));
-    pwmWrite(PIN_M2A,PWM_TRIGGER(R2));
+    pwmWrite(PIN_M1A,PWM_TRIGGER(speed));
+    pwmWrite(PIN_M2A,PWM_TRIGGER(speed));
 }
 
 // Fonction pour faire reculer le moteur
-void backward(int L2, int leftAxis) {
+void backward(int speed, int angle) {
     pinMode(PIN_M1A,OUTPUT);
 	pinMode(PIN_M1B,PWM_OUTPUT);
 	pinMode(PIN_M2A,OUTPUT);
@@ -38,8 +38,8 @@ void backward(int L2, int leftAxis) {
 
     digitalWrite(PIN_M1A,LOW);
     digitalWrite(PIN_M2A,LOW);
-    pwmWrite(PIN_M1B,PWM_TRIGGER(L2));
-    pwmWrite(PIN_M2B,PWM_TRIGGER(L2));
+    pwmWrite(PIN_M1B,PWM_TRIGGER(speed));
+    pwmWrite(PIN_M2B,PWM_TRIGGER(speed));
 }
 
 // Fonction pour arrêter le moteur
