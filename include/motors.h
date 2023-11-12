@@ -9,8 +9,8 @@
 #define PWM_TRIGGER(X) ((int)((X)*PWM_RANGE)/MAX_TRIGGER)
 
 void initMotors();
-void forward(int R2, int leftAxis);
-void backward(int L2, int leftAxis);
+void forward(int speed, int angle);
+void backward(int speed, int angle);
 void stop();
 void LF_forward();
 void LF_turnLeft();
