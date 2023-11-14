@@ -1,7 +1,7 @@
 EXEC=rc
-SRCDIR=src
+SRCDIR=code/src
 BINDIR=bin
-INCLUDEDIR=include
+INCLUDEDIR=code/include
 LATEXDIR=latex
 LEVDEVDIR=/usr/include/libevdev-1.0
 CC=gcc
