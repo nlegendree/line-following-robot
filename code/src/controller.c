@@ -45,6 +45,7 @@ char *eventPath() {
 
 struct libevdev *initController() {
     struct libevdev *dev = NULL;
+    while(eventPath() == NULL) {}
     int fd = open(eventPath(), O_RDONLY);
     int rc = libevdev_new_from_fd(fd, &dev);
     if (rc < 0) {
