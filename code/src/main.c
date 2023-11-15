@@ -68,6 +68,12 @@ void manualControl(
 
 int main() {
 
+    // WiringPi Initialization
+    wiringPiSetupGpio();
+    
+    // Motors Initialization
+    initMotors();
+
     // LCD Initialization
     int lcd = initLCD();
 
@@ -88,24 +94,21 @@ int main() {
     struct input_event ev;
     while (1) {
         libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
-        lcdClear(lcd);
+        //lcdClear(lcd);
 
 
         // Line-Finder Mode
         if (buttonIsPressed(BUTTON_CROSS,controller,ev)) { // Press CROSS to enter Line-Finder Mode
             while(!buttonIsPressed(BUTTON_CIRCLE,controller,ev)) { // Press CIRCLE to leave Line-Finder Mode
                 libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
-                lineFinder(lcd);
+                //lineFinder(lcd);
             }
         }
 
 
         // Manual Mode
-        lcdPrintf(lcd,"Manual Mode");
+        //lcdPrintf(lcd,"Manual Mode");
         manualControl(controller,ev,&L2state,&R2state,&LXstate);
-
-
-        delay(10);
     }
     
     return 0;

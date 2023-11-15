@@ -7,9 +7,11 @@
 // Initialisation de la bibliothèque WiringPi
 void initMotors() {
     pinMode(PIN_M1A,OUTPUT);
-	pinMode(PIN_M1B,OUTPUT);
-	pinMode(PIN_M2A,OUTPUT);
-	pinMode(PIN_M2B,OUTPUT);
+    pinMode(PIN_M1B,OUTPUT);
+    pinMode(PIN_M2A,OUTPUT);
+    pinMode(PIN_M2B,OUTPUT);
+    pinMode(PIN_EN1,PWM_OUTPUT);
+    pinMode(PIN_EN2,PWM_OUTPUT);
 
     pwmSetMode(PWM_MODE_MS);
     pwmSetClock(PWM_CLOCK);    // Réglage de la fréquence PWM
@@ -18,41 +20,50 @@ void initMotors() {
 
 // Fonction pour faire avancer le moteur
 void forward(int speed, int angle) {
-    pinMode(PIN_M1A,PWM_OUTPUT);
-	pinMode(PIN_M1B,OUTPUT);
-	pinMode(PIN_M2A,PWM_OUTPUT);
-	pinMode(PIN_M2B,OUTPUT);
-
+    float coeffSpeed = (float)speed/MAX_TRIGGER;
+    if (angle <= MID_AXIS) {
+	float coeffAngle = (float)angle/MID_AXIS;
+	//printf("Gauche : %d %d\n",(int)(coeffAngle*coeffSpeed*PWM_RANGE),(int)(coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN1,(int)(coeffAngle*coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN2,(int)(coeffSpeed*PWM_RANGE));
+    }
+    else {
+	float coeffAngle = (float)(MAX_AXIS - angle)/(MID_AXIS+1);
+	//printf("Droite : %d %d\n",(int)(coeffSpeed*PWM_RANGE),(int)(coeffAngle*coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN1,(int)(coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN2,(int)(coeffAngle*coeffSpeed*PWM_RANGE));
+    }
+    digitalWrite(PIN_M1A,HIGH);
+    digitalWrite(PIN_M2A,HIGH);
     digitalWrite(PIN_M1B,LOW);
     digitalWrite(PIN_M2B,LOW);
-    pwmWrite(PIN_M1A,PWM_TRIGGER(speed));
-    pwmWrite(PIN_M2A,PWM_TRIGGER(speed));
 }
 
 // Fonction pour faire reculer le moteur
 void backward(int speed, int angle) {
-    pinMode(PIN_M1A,OUTPUT);
-	pinMode(PIN_M1B,PWM_OUTPUT);
-	pinMode(PIN_M2A,OUTPUT);
-	pinMode(PIN_M2B,PWM_OUTPUT);
-
+    float coeffSpeed = (float)speed/MAX_TRIGGER;
+    if (angle <= MID_AXIS) {
+	float coeffAngle = (float)angle/MID_AXIS;
+	//printf("Gauche : %d %d\n",(int)(coeffAngle*coeffSpeed*PWM_RANGE),(int)(coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN1,(int)(coeffAngle*coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN2,(int)(coeffSpeed*PWM_RANGE));
+    }
+    else {
+	float coeffAngle = (float)(MAX_AXIS - angle)/(MID_AXIS+1);
+	//printf("Droite : %d %d\n",(int)(coeffSpeed*PWM_RANGE),(int)(coeffAngle*coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN1,(int)(coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN2,(int)(coeffAngle*coeffSpeed*PWM_RANGE));
+    }
     digitalWrite(PIN_M1A,LOW);
     digitalWrite(PIN_M2A,LOW);
-    pwmWrite(PIN_M1B,PWM_TRIGGER(speed));
-    pwmWrite(PIN_M2B,PWM_TRIGGER(speed));
+    digitalWrite(PIN_M1B,HIGH);
+    digitalWrite(PIN_M2B,HIGH);
 }
 
 // Fonction pour arrêter le moteur
 void stop() {
-    pinMode(PIN_M1A,OUTPUT);
-	pinMode(PIN_M1B,OUTPUT);
-	pinMode(PIN_M2A,OUTPUT);
-	pinMode(PIN_M2B,OUTPUT);
-
-    digitalWrite(PIN_M1B,LOW);
-    digitalWrite(PIN_M2B,LOW);
-    digitalWrite(PIN_M1A,LOW);
-    digitalWrite(PIN_M2A,LOW);
+    pwmWrite(PIN_EN1,0);
+    pwmWrite(PIN_EN2,0);
 }
 
 // Fonction pour faire avancer le moteur en mode suiveur de ligne
@@ -68,22 +79,4 @@ void LF_turnLeft() {
 // Fonction pour faire tourner le moteur à droite en mode suiveur de ligne
 void LF_turnRight() {
 
-}
-
-// Fonction main test
-int main_test() {
-	wiringPiSetupGpio();
-    initMotors();  // Initialisation
-
-    forward(200,MID_AXIS);
-    
-    delay(2000);
-
-    backward(200,MID_AXIS);
-    
-    delay(2000);
-
-    stop();
-
-    return 0;
 }

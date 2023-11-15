@@ -8,13 +8,16 @@
 #define PIN_SUIVEUR_CENTRE 3
 #define PIN_SUIVEUR_DROIT 4
 
-#define PIN_TRIG 17  // GPIO pin pour le signal Trig
-#define PIN_ECHO 18  // GPIO pin pour le signal Echo
+#define PIN_TRIG 25
+#define PIN_ECHO 8
 
-#define PIN_M1A 18
-#define PIN_M1B 12
-#define PIN_M2A 13
-#define PIN_M2B 19
+#define PIN_EN1 13
+#define PIN_EN2 12
+
+#define PIN_M1A 5
+#define PIN_M1B 6
+#define PIN_M2A 26
+#define PIN_M2B 21
 
 
 #endif
