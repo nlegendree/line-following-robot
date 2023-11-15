@@ -26,3 +26,15 @@ bool detecterIntersection(bool gauche, bool centre, bool droite){
 bool detecterIntersectionEnT(bool gauche, bool droite){
     return (gauche && droite);
 }
+
+void LF_forward() {
+    forward(LF_SPEED,MID_AXIS);
+}
+
+void LF_turnLeft() {
+    forward(LF_SPEED,0);
+}
+
+void LF_turnRight() {
+    forward(LF_SPEED,MAX_AXIS);
+}

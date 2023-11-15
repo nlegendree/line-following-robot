@@ -63,18 +63,3 @@ void stop() {
     pwmWrite(PIN_EN1,0);
     pwmWrite(PIN_EN2,0);
 }
-
-// Fonction pour faire avancer le moteur en mode suiveur de ligne
-void LF_forward() {
-
-}
-
-// Fonction pour faire tourner le moteur à gauche en mode suiveur de ligne
-void LF_turnLeft() {
-
-}
-
-// Fonction pour faire tourner le moteur à droite en mode suiveur de ligne
-void LF_turnRight() {
-
-}
