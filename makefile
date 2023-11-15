@@ -20,6 +20,6 @@ $(SRCDIR)/%.o : $(SRCDIR)/%.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 clean :
-	rm -f $(BINDIR)/*
+	rm -f $(BINDIR)/$(EXEC)
 	rm -f $(SRCDIR)/*.o
 	rm -f $(LATEXDIR)/*.pdf $(LATEXDIR)/*.fls $(LATEXDIR)/*.fdb_latexmk $(LATEXDIR)/*.aux $(LATEXDIR)/*.log
