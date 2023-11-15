@@ -9,7 +9,7 @@
 int initLCD() {
 
     int i;
-
+    
     pcf8574Setup(AF_BASE,I2C_ADDRESS);
     
     int lcd = lcdInit(2, 16, 4, AF_RS, AF_E, AF_DB4,AF_DB5,AF_DB6,AF_DB7, 0,0,0,0);
@@ -18,7 +18,7 @@ int initLCD() {
         fprintf (stderr, "lcdInit failed\n") ;
         exit (EXIT_FAILURE) ;
     }
-    
+
     for(i=0;i<8;i++)
           pinMode(AF_BASE+i,OUTPUT);
     digitalWrite(AF_LED,1);

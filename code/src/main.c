@@ -78,7 +78,7 @@ int main() {
     int lcd = initLCD();
 
     // Line-Finder Initialization
-    initSuiveurLigne();
+    //initSuiveurLigne();
 
     // Controller Initialization
     struct libevdev *controller = initController();

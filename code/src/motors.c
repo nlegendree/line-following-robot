@@ -20,27 +20,11 @@ void initMotors() {
 
 // Fonction pour faire avancer le moteur
 void forward(int speed, int angle) {
-    float coeffSpeed = (float)speed/MAX_TRIGGER;
-    if (angle <= MID_AXIS) {
-	float coeffAngle = (float)angle/MID_AXIS;
-	//printf("Gauche : %d %d\n",(int)(coeffAngle*coeffSpeed*PWM_RANGE),(int)(coeffSpeed*PWM_RANGE));
-	pwmWrite(PIN_EN1,(int)(coeffAngle*coeffSpeed*PWM_RANGE));
-	pwmWrite(PIN_EN2,(int)(coeffSpeed*PWM_RANGE));
-    }
-    else {
-	float coeffAngle = (float)(MAX_AXIS - angle)/(MID_AXIS+1);
-	//printf("Droite : %d %d\n",(int)(coeffSpeed*PWM_RANGE),(int)(coeffAngle*coeffSpeed*PWM_RANGE));
-	pwmWrite(PIN_EN1,(int)(coeffSpeed*PWM_RANGE));
-	pwmWrite(PIN_EN2,(int)(coeffAngle*coeffSpeed*PWM_RANGE));
-    }
     digitalWrite(PIN_M1A,HIGH);
     digitalWrite(PIN_M2A,HIGH);
     digitalWrite(PIN_M1B,LOW);
     digitalWrite(PIN_M2B,LOW);
-}
-
-// Fonction pour faire reculer le moteur
-void backward(int speed, int angle) {
+    
     float coeffSpeed = (float)speed/MAX_TRIGGER;
     if (angle <= MID_AXIS) {
 	float coeffAngle = (float)angle/MID_AXIS;
@@ -54,10 +38,28 @@ void backward(int speed, int angle) {
 	pwmWrite(PIN_EN1,(int)(coeffSpeed*PWM_RANGE));
 	pwmWrite(PIN_EN2,(int)(coeffAngle*coeffSpeed*PWM_RANGE));
     }
+}
+
+// Fonction pour faire reculer le moteur
+void backward(int speed, int angle) {
     digitalWrite(PIN_M1A,LOW);
     digitalWrite(PIN_M2A,LOW);
     digitalWrite(PIN_M1B,HIGH);
     digitalWrite(PIN_M2B,HIGH);
+    
+    float coeffSpeed = (float)speed/MAX_TRIGGER;
+    if (angle <= MID_AXIS) {
+	float coeffAngle = (float)angle/MID_AXIS;
+	//printf("Gauche : %d %d\n",(int)(coeffAngle*coeffSpeed*PWM_RANGE),(int)(coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN1,(int)(coeffAngle*coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN2,(int)(coeffSpeed*PWM_RANGE));
+    }
+    else {
+	float coeffAngle = (float)(MAX_AXIS - angle)/(MID_AXIS+1);
+	//printf("Droite : %d %d\n",(int)(coeffSpeed*PWM_RANGE),(int)(coeffAngle*coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN1,(int)(coeffSpeed*PWM_RANGE));
+	pwmWrite(PIN_EN2,(int)(coeffAngle*coeffSpeed*PWM_RANGE));
+    }
 }
 
 // Fonction pour arrêter le moteur
