@@ -6,7 +6,7 @@ LATEXDIR=latex
 LEVDEVDIR=/usr/include/libevdev-1.0
 CC=gcc
 CFLAGS=-Wall -pedantic -I$(INCLUDEDIR) -I$(LEVDEVDIR)
-LIBS=-levdev -lwiringPi -lwiringPiDev
+LIBS=-lc -lm -levdev -lwiringPi -lwiringPiDev
 
 SRCS := $(wildcard $(SRCDIR)/*.c)
 OBJS := $(SRCS:.c=.o)
