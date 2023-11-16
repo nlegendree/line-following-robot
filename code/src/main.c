@@ -15,6 +15,9 @@
 #include <fcntl.h>
 #include <string.h>
 
+#define MODE_MANUAL     0
+#define MODE_LINEFINDER 1
+
 bool obstacleDetect(int lcd) {
     int distance = getDistance();
 
@@ -71,18 +74,19 @@ int main() {
     // WiringPi Initialization
     wiringPiSetupGpio();
     
-    // Motors Initialization
-    initMotors();
-
     // LCD Initialization
     int lcd = initLCD();
 
+    // Motors Initialization
+    initMotors();
+
     // Line-Finder Initialization
-    //initSuiveurLigne();
+    initSuiveurLigne();
 
     // Controller Initialization
+    lcdClear(lcd); lcdPrintf(lcd,"Waiting for controller...");
     struct libevdev *controller = initController();
-    printf("Input device name : \"%s\"\n", libevdev_get_name(controller));
+    lcdClear(lcd); lcdPrintf(lcd,"Controller connected");
 
     // Event States Initialization
     int L2state = 0;
@@ -91,19 +95,24 @@ int main() {
 
     // Controller Detection
     struct input_event ev;
+    int mode = MODE_MANUAL;
     while (1) {
-        libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
-
-        // Line-Finder Mode
-        if (buttonIsPressed(BUTTON_CROSS,controller,ev)) { // Press CROSS to enter Line-Finder Mode
-            while(!buttonIsPressed(BUTTON_CIRCLE,controller,ev)) { // Press CIRCLE to leave Line-Finder Mode
-                libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev);
-                //lineFinder(lcd);
-            }
+        if (libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev) < 0) {
+            lcdClear(lcd); lcdPrintf(lcd,"Controller disconnected");
+            controller = initController();
+            lcdClear(lcd); lcdPrintf(lcd,"Controller connected");
         }
+        else {
+            if (buttonIsPressed(BUTTON_CROSS,controller,ev)) // Press CROSS to enter Line-Finder Mode
+                mode = MODE_LINEFINDER;
+            else if (buttonIsPressed(BUTTON_CIRCLE,controller,ev)) // Press CIRCLE to leave Line-Finder Mode
+                mode = MODE_MANUAL;
 
-        // Manual Mode
-        manualControl(controller,ev,&L2state,&R2state,&LXstate);
+            if (mode == MODE_LINEFINDER)
+                lineFinder(lcd);
+            else if (mode == MODE_MANUAL)
+                manualControl(controller,ev,&L2state,&R2state,&LXstate);
+        }
     }
     
     return 0;
