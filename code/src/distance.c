@@ -27,17 +27,3 @@ int getDistance() {
     
     return distance;
 }
-
-int main_test() {
-    wiringPiSetupGpio();
-    initDistanceSensor();
-    int distance;
-    while (1) {
-        //system("clear");
-        distance = getDistance();
-        printf("Distance : %d cm\n",distance);
-        //sleep(1);
-    }
-    
-    return 0;
-}

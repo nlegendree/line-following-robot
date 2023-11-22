@@ -20,11 +20,7 @@ bool detecterLigne(int pin_capteur) {
 }
 
 bool detecterIntersection(bool gauche, bool centre, bool droite){
-    return ((gauche && centre && droite) || (gauche && centre) || (centre && droite));
-}
-
-bool detecterIntersectionEnT(bool gauche, bool droite){
-    return (gauche && droite);
+    return ((gauche && centre && droite) || (gauche && droite) || (gauche && centre) || (centre && droite));
 }
 
 void LF_forward() {

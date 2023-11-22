@@ -20,35 +20,41 @@
 bool obstacleDetect(int lcd) {
     int distance = getDistance();
 
-    if (distance < 5) { //Bug si obstacle trop proche (ne devrait pas arriver) valeur à 1200 environ à vérifier en TP.
-        lcdClear(lcd);
-        lcdPrintf(lcd,"Obstacle proche!");
-        buzzerOn();
-
+    if (distance < 5) //Bug si obstacle trop proche (ne devrait pas arriver) valeur à 1200 environ à vérifier en TP.
         return 1;
-    }
-
-    lcdClear(lcd);
-    lcdPrintf(lcd,"Pas d'obstacle");
-    buzzerOff();
 
     return 0;
 }
 
-void lineFinder(int lcd){
+void lineFinder(int lcd, bool *obstacleWasDetected){
     bool gauche = detecterLigne(PIN_SUIVEUR_GAUCHE);
     bool centre = detecterLigne(PIN_SUIVEUR_CENTRE);
     bool droite = detecterLigne(PIN_SUIVEUR_DROIT);
     printf("%d %d %d\n",gauche,centre,droite);
 
-    if (detecterIntersectionEnT(gauche,droite) /*|| obstacleDetect(lcd)*/) // Intersection en T = fin du parcours
+    if (obstacleDetect(lcd)) {
         stopMotors();
-    else if (detecterIntersection(gauche,centre,droite) || centre || (!gauche && !centre && !droite)) // Si aucun capteur n'a detecte la ligne, on avance quand meme
-        LF_forward();
-    else if (gauche)
-        LF_turnLeft();
-    else if (droite)
-        LF_turnRight();
+
+        if (!*obstacleWasDetected) {
+            lcdClear(lcd); lcdPrintf(lcd,"Obstacle proche !");
+            buzzerOn();
+            *obstacleWasDetected = 1;
+        }
+    }
+    else {
+        if (detecterIntersection(gauche,centre,droite) || centre || (!gauche && !centre && !droite)) // Si aucun capteur n'a detecte la ligne, on avance quand meme
+            LF_forward();
+        else if (gauche)
+            LF_turnLeft();
+        else if (droite)
+            LF_turnRight();
+        
+        if (obstacleWasDetected) {
+            lcdClear(lcd); lcdPrintf(lcd,"Pas d'obstacle !");
+            buzzerOff();
+            *obstacleWasDetected = 0;
+        }
+    }
 }
 
 void manualControl(
@@ -94,6 +100,7 @@ int main(int argc, char* argv[]) {
     // Boucle principale
     SDL_Event event;
     int mode = MODE_MANUAL;
+    bool obstacleWasDetected = 0;
     while (1) {
         SDL_PollEvent(&event);
         if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
@@ -108,7 +115,7 @@ int main(int argc, char* argv[]) {
                 mode = MODE_MANUAL;
 
             if (mode == MODE_LINEFINDER)
-                lineFinder(lcd);
+                lineFinder(lcd,&obstacleWasDetected);
             else if (mode == MODE_MANUAL)
                 manualControl(event,&L2state,&R2state,&LXstate);
         }
