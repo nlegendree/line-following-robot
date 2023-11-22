@@ -2,36 +2,21 @@
 #define __CONTROLLER__
 
 
+#include <SDL2/SDL.h>
 #include <stdbool.h>
-#include <libevdev/libevdev.h>
-#include <libevdev/libevdev-uinput.h>
 
-#define DEVICE_NAME "Controller" // Part of the name specified in the 'evtest' command
+#define MAX_TRIGGER         32767
+#define MAX_AXIS            32767
+#define MIN_AXIS           -32768
+#define DEADZONE_PERCENT    15 // Deadzone percentage
+#define DEADZONE            (DEADZONE_PERCENT/100.0)
 
-#define BUTTON_CROSS BTN_SOUTH
-#define BUTTON_SQUARE BTN_WEST
-#define BUTTON_TRIANGLE BTN_NORTH
-#define BUTTON_CIRCLE BTN_EAST
-
-#define MAX_TRIGGER 255
-#define TRIGGER_L2 ABS_Z
-#define TRIGGER_R2 ABS_RZ
-
-#define MAX_AXIS 255
-#define MID_AXIS (MAX_AXIS/2)
-#define DEADZONE_PERCENT 15 // Deadzone percentage
-#define DEADZONE (int)(DEADZONE_PERCENT/100.0*MID_AXIS) 
-#define AXIS_LX ABS_X
-#define AXIS_LY ABS_Y
-#define AXIS_RX ABS_RX
-#define AXIS_RY ABS_RY
-
-struct libevdev *initController();
-bool buttonIsPressed(int BUTTON, struct libevdev *controller,struct input_event ev);
-bool buttonIsReleased(int BUTTON, struct libevdev *controller,struct input_event ev);
-bool buttonIsBeingPressed(int BUTTON, struct libevdev *controller,struct input_event ev,bool *state);
-int triggerValue(int TRIGGER, struct libevdev *controller,struct input_event ev,int *state);
-int axisValue(int AXIS, struct libevdev *controller,struct input_event ev,int *state);
+SDL_GameController* initController();
+bool buttonIsPressed(int BUTTON, SDL_Event event);
+bool buttonIsReleased(int BUTTON, SDL_Event event);
+bool buttonIsBeingPressed(int BUTTON, SDL_Event event, bool *state);
+int triggerValue(int TRIGGER, SDL_Event event, int *state);
+int axisValue(int AXIS, SDL_Event event, int *state);
 
 
 #endif

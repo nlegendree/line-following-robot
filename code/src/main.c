@@ -6,8 +6,7 @@
 #include "buzzer.h"
 #include "distance.h"
 
-#include <libevdev/libevdev.h>
-#include <libevdev/libevdev-uinput.h>
+#include <SDL2/SDL.h>
 #include <wiringPi.h>
 #include <lcd.h>
 #include <stdio.h>
@@ -40,10 +39,11 @@ void lineFinder(int lcd){
     bool gauche = detecterLigne(PIN_SUIVEUR_GAUCHE);
     bool centre = detecterLigne(PIN_SUIVEUR_CENTRE);
     bool droite = detecterLigne(PIN_SUIVEUR_DROIT);
+    printf("%d %d %d\n",gauche,centre,droite);
 
-    if (obstacleDetect(lcd) || detecterIntersectionEnT(gauche,droite)) // Intersection en T = fin du parcours
-        stop();
-    else if (detecterIntersection(gauche,centre,droite) || centre || !(gauche && centre && droite)) // Si aucun capteur n'a detecte la ligne, on avance quand meme
+    if (detecterIntersectionEnT(gauche,droite) /*|| obstacleDetect(lcd)*/) // Intersection en T = fin du parcours
+        stopMotors();
+    else if (detecterIntersection(gauche,centre,droite) || centre || (!gauche && !centre && !droite)) // Si aucun capteur n'a detecte la ligne, on avance quand meme
         LF_forward();
     else if (gauche)
         LF_turnLeft();
@@ -52,15 +52,14 @@ void lineFinder(int lcd){
 }
 
 void manualControl(
-        struct libevdev *controller,
-        struct input_event ev,
+        SDL_Event event,
         int *L2state,
         int *R2state,
         int *LXstate) 
 {
-    int R2 = triggerValue(TRIGGER_R2,controller,ev,R2state);
-    int L2 = triggerValue(TRIGGER_L2,controller,ev,L2state);
-    int LX = axisValue(AXIS_LX,controller,ev,LXstate);
+    int R2 = triggerValue(SDL_CONTROLLER_AXIS_TRIGGERRIGHT,event,R2state);
+    int L2 = triggerValue(SDL_CONTROLLER_AXIS_TRIGGERLEFT,event,L2state);
+    int LX = axisValue(SDL_CONTROLLER_AXIS_LEFTX,event,LXstate);
     if (R2 >= L2) {
         forward(R2-L2,LX);
     }
@@ -69,13 +68,17 @@ void manualControl(
     }
 }
 
-int main() {
-
+int main(int argc, char* argv[]) {
     // WiringPi Initialization
     wiringPiSetupGpio();
     
     // LCD Initialization
     int lcd = initLCD();
+
+    // Controller Initialization
+    lcdClear(lcd); lcdPrintf(lcd,"Waiting for     controller...");
+    initController();
+    lcdClear(lcd); lcdPrintf(lcd,"Controller      connected");
 
     // Motors Initialization
     initMotors();
@@ -83,38 +86,33 @@ int main() {
     // Line-Finder Initialization
     initSuiveurLigne();
 
-    // Controller Initialization
-    lcdClear(lcd); lcdPrintf(lcd,"Waiting for controller...");
-    struct libevdev *controller = initController();
-    lcdClear(lcd); lcdPrintf(lcd,"Controller connected");
-
     // Event States Initialization
     int L2state = 0;
     int R2state = 0;
-    int LXstate = MID_AXIS;
+    int LXstate = 0;
 
-    // Controller Detection
-    struct input_event ev;
+    // Boucle principale
+    SDL_Event event;
     int mode = MODE_MANUAL;
     while (1) {
-        if (libevdev_next_event(controller, LIBEVDEV_READ_FLAG_NORMAL, &ev) < 0) {
-            lcdClear(lcd); lcdPrintf(lcd,"Controller disconnected");
-            controller = initController();
-            lcdClear(lcd); lcdPrintf(lcd,"Controller connected");
+        SDL_PollEvent(&event);
+        if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
+            lcdClear(lcd); lcdPrintf(lcd,"Controller      disconnected");
+            initController();
+            lcdClear(lcd); lcdPrintf(lcd,"Controller      connected");
         }
         else {
-            if (buttonIsPressed(BUTTON_CROSS,controller,ev)) // Press CROSS to enter Line-Finder Mode
+            if (buttonIsPressed(SDL_CONTROLLER_BUTTON_A,event)) // Press CROSS to enter Line-Finder Mode
                 mode = MODE_LINEFINDER;
-            else if (buttonIsPressed(BUTTON_CIRCLE,controller,ev)) // Press CIRCLE to leave Line-Finder Mode
+            else if (buttonIsPressed(SDL_CONTROLLER_BUTTON_B,event)) // Press CIRCLE to leave Line-Finder Mode
                 mode = MODE_MANUAL;
 
             if (mode == MODE_LINEFINDER)
                 lineFinder(lcd);
             else if (mode == MODE_MANUAL)
-                manualControl(controller,ev,&L2state,&R2state,&LXstate);
+                manualControl(event,&L2state,&R2state,&LXstate);
         }
     }
-    
+
     return 0;
-    
 }

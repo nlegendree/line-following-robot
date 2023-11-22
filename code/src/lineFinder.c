@@ -28,11 +28,11 @@ bool detecterIntersectionEnT(bool gauche, bool droite){
 }
 
 void LF_forward() {
-    forward(LF_SPEED,MID_AXIS);
+    forward(LF_SPEED,0);
 }
 
 void LF_turnLeft() {
-    forward(LF_SPEED,0);
+    forward(LF_SPEED,MIN_AXIS);
 }
 
 void LF_turnRight() {

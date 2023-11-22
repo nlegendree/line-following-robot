@@ -1,94 +1,85 @@
 #include "controller.h"
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <stdbool.h>
-#include <dirent.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <linux/input.h>
-#include <libevdev/libevdev.h>
-#include <libevdev/libevdev-uinput.h>
+#include <SDL2/SDL.h>
 
-char *eventPath() {
-    DIR *dir = opendir("/dev/input/");
-    struct dirent *entry; 
+SDL_GameController* initController() {
+    int numControllers = 0;
+    while (numControllers < 1) {
+        SDL_Quit();
+        SDL_Init(SDL_INIT_GAMECONTROLLER);
+        numControllers = SDL_NumJoysticks();
+    }
+    SDL_GameController* controller = SDL_GameControllerOpen(0);
+    return controller;
+}
 
-    char event_path[267];
-    char event_name[267];
-    char *event_path_output = NULL;
-    while ((entry = readdir(dir)) != NULL) {
-        if (strstr(entry->d_name, "event") != NULL) {
-            snprintf(event_path, sizeof(event_path), "/dev/input/%s", entry->d_name);
+bool buttonIsPressed(int BUTTON, SDL_Event event) {
+    return event.type == SDL_CONTROLLERBUTTONDOWN && event.cbutton.button == BUTTON;
+}
 
-            // Ouverture du fichier d'événement pour lire son nom
-            int fd = open(event_path, O_RDONLY);
-            if (fd != -1) {
-                //On récupère le nom associé au périphérique
-                ioctl(fd, EVIOCGNAME(sizeof(event_name)), event_name);
+bool buttonIsReleased(int BUTTON, SDL_Event event) {
+    return event.type == SDL_CONTROLLERBUTTONUP && event.cbutton.button == BUTTON;
+}
 
-                // Si la partie du nom correspond à la manette (on prend seulement l'évènement qui correspond aux touches)
-                if (strstr(event_name, DEVICE_NAME) != NULL && !(strstr(event_name, "Touchpad") != NULL || strstr(event_name, "Sensors") != NULL)) {
-                    event_path_output = strdup(event_path);
-                    break;
-                }
+bool buttonIsBeingPressed(int BUTTON, SDL_Event event, bool *state) {
+    if (buttonIsPressed(BUTTON,event))
+        *state = 1;
+    if (buttonIsReleased(BUTTON,event))
+        *state = 0;
+    return *state;
+}
 
-                close(fd);
+int triggerValue(int TRIGGER, SDL_Event event, int *state) {
+    if (event.caxis.type == SDL_CONTROLLERAXISMOTION && event.caxis.axis == TRIGGER)
+        *state = event.caxis.value;
+    return *state;
+}
+
+int axisValue(int AXIS, SDL_Event event, int *state) {
+    if (event.caxis.type == SDL_CONTROLLERAXISMOTION && event.caxis.axis == AXIS) {
+        if (event.caxis.value <= DEADZONE*MIN_AXIS || event.caxis.value >= DEADZONE*MAX_AXIS)
+            *state = event.caxis.value;
+        else
+            *state = 0;
+    }
+    return *state;
+}
+
+int main_test_c(int argc, char* argv[]) {
+    printf("Waiting for controller...\n");
+    initController();
+    printf("Controller connected\n");
+
+    // States
+    bool Xstate = 0;
+    int L2state = 0;
+    int LXstate = 0;
+
+    // Boucle principale
+    SDL_Event event;
+    while (1) {
+        SDL_PollEvent(&event);
+        if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
+            printf("Controller disconnected\n");
+            initController();
+            printf("Controller connected\n");
+        }
+        else {
+            if (buttonIsBeingPressed(SDL_CONTROLLER_BUTTON_A,event,&Xstate)) {
+                printf("Tu appuyes sur X\n");
+            }
+            int L2 = triggerValue(SDL_CONTROLLER_AXIS_TRIGGERLEFT,event,&L2state);
+            if (L2 > 0) {
+                printf("L2 : %d\n", L2);
+            }
+            int LX = axisValue(SDL_CONTROLLER_AXIS_LEFTX,event,&LXstate);
+            if (LX != 0) {
+                printf("Axis Left : %d\n", LX);
             }
         }
     }
 
-    closedir(dir);
-    return event_path_output; 
-}
-
-struct libevdev *initController() {
-    struct libevdev *dev = NULL;
-    while(eventPath() == NULL) {}
-    int fd = open(eventPath(), O_RDONLY);
-    int rc = libevdev_new_from_fd(fd, &dev);
-    if (rc < 0) {
-        fprintf(stderr, "Failed to init libevdev (%s)\n", strerror(-rc));
-        exit(1);
-    }
-    return dev;
-}
-
-bool buttonIsPressed(int BUTTON, struct libevdev *controller, struct input_event ev) {
-    return libevdev_event_is_code(&ev, EV_KEY, BUTTON) && libevdev_get_event_value(controller, EV_KEY, BUTTON);
-}
-
-bool buttonIsReleased(int BUTTON, struct libevdev *controller, struct input_event ev) {
-    return libevdev_event_is_code(&ev, EV_KEY, BUTTON) && !libevdev_get_event_value(controller, EV_KEY, BUTTON);
-}
-
-bool buttonIsBeingPressed(int BUTTON, struct libevdev *controller, struct input_event ev, bool *state) {
-    int code = libevdev_event_is_code(&ev, EV_KEY, BUTTON);
-    int value = libevdev_get_event_value(controller, EV_KEY, BUTTON);
-    if (code && value)
-        *state = 1;
-    else if (code && !value)
-        *state = 0;
-    return *state;
-}
-
-int triggerValue(int TRIGGER, struct libevdev *controller, struct input_event ev, int *state) {
-    int code = libevdev_event_is_code(&ev, EV_ABS, TRIGGER);
-    int value = libevdev_get_event_value(controller, EV_ABS, TRIGGER);
-    if (code && value > 0)
-        *state = value;
-    else if (code && value == 0)
-        *state = 0;
-    return *state;
-}
-
-int axisValue(int AXIS, struct libevdev *controller, struct input_event ev, int *state) {
-    int code = libevdev_event_is_code(&ev, EV_ABS, AXIS);
-    int value = libevdev_get_event_value(controller, EV_ABS, AXIS);
-    if (code && (value <= (MID_AXIS - DEADZONE) || value >= (MID_AXIS + DEADZONE)))
-        *state = value;
-    else if (code && (value > (MID_AXIS - DEADZONE) && value < (MID_AXIS + DEADZONE)))
-        *state = MID_AXIS;
-    return *state;
+    return 0;
 }

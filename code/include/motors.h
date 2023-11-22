@@ -10,7 +10,7 @@
 void initMotors();
 void forward(int speed, int angle);
 void backward(int speed, int angle);
-void stop();
+void stopMotors();
 
 
 #endif

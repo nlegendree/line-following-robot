@@ -3,10 +3,9 @@ SRCDIR=code/src
 BINDIR=bin
 INCLUDEDIR=code/include
 LATEXDIR=latex
-LEVDEVDIR=/usr/include/libevdev-1.0
 CC=gcc
-CFLAGS=-Wall -pedantic -I$(INCLUDEDIR) -I$(LEVDEVDIR)
-LIBS=-lc -lm -levdev -lwiringPi -lwiringPiDev
+CFLAGS=-Wall -pedantic -I$(INCLUDEDIR)
+LIBS=-lc -lm -lSDL2 -lwiringPi -lwiringPiDev
 
 SRCS := $(wildcard $(SRCDIR)/*.c)
 OBJS := $(SRCS:.c=.o)
