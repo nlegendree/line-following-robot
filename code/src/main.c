@@ -83,8 +83,7 @@ int main(int argc, char* argv[]) {
 
     // Controller Initialization
     lcdClear(lcd); lcdPrintf(lcd,"Waiting for     controller...");
-    initController();
-    lcdClear(lcd); lcdPrintf(lcd,"Controller      connected");
+    SDL_GameController *controller = initController();
 
     // Motors Initialization
     initMotors();
@@ -99,14 +98,20 @@ int main(int argc, char* argv[]) {
 
     // Boucle principale
     SDL_Event event;
+    bool exit = 0;
     int mode = MODE_MANUAL;
     bool obstacleWasDetected = 0;
-    while (1) {
+    while (!exit) {
         SDL_PollEvent(&event);
-        if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
-            lcdClear(lcd); lcdPrintf(lcd,"Controller      disconnected");
-            initController();
+        if (event.type == SDL_QUIT)
+            exit = 1;
+        else if (event.cdevice.type == SDL_CONTROLLERDEVICEADDED) {
             lcdClear(lcd); lcdPrintf(lcd,"Controller      connected");
+            controller = SDL_GameControllerOpen(0);
+        }
+        else if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
+            lcdClear(lcd); lcdPrintf(lcd,"Controller      disconnected");
+            SDL_GameControllerClose(controller);
         }
         else {
             if (buttonIsPressed(SDL_CONTROLLER_BUTTON_A,event)) // Press CROSS to enter Line-Finder Mode
@@ -120,6 +125,8 @@ int main(int argc, char* argv[]) {
                 manualControl(event,&L2state,&R2state,&LXstate);
         }
     }
+
+    SDL_Quit();
 
     return 0;
 }

@@ -5,14 +5,8 @@
 #include <SDL2/SDL.h>
 
 SDL_GameController* initController() {
-    int numControllers = 0;
-    while (numControllers < 1) {
-        SDL_Quit();
-        SDL_Init(SDL_INIT_GAMECONTROLLER);
-        numControllers = SDL_NumJoysticks();
-    }
-    SDL_GameController* controller = SDL_GameControllerOpen(0);
-    return controller;
+    SDL_Init(SDL_INIT_GAMECONTROLLER);
+    return NULL;
 }
 
 bool buttonIsPressed(int BUTTON, SDL_Event event) {
