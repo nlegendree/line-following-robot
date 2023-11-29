@@ -19,7 +19,6 @@
 
 bool obstacleDetect(int lcd) {
     int distance = getDistance();
-
     if (distance < 5) //Bug si obstacle trop proche (ne devrait pas arriver) valeur à 1200 environ à vérifier en TP.
         return 1;
 
@@ -33,13 +32,12 @@ void lineFinder(int lcd, bool *obstacleWasDetected){
     printf("%d %d %d\n",gauche,centre,droite);
 
     if (obstacleDetect(lcd)) {
+        printf("ok");
         stopMotors();
-
-        if (!*obstacleWasDetected) {
-            lcdClear(lcd); lcdPrintf(lcd,"Obstacle proche !");
-            buzzerOn();
-            *obstacleWasDetected = 1;
-        }
+        printf("ok1");
+        lcdClear(lcd); lcdPrintf(lcd,"Obstacle proche !");
+        buzzerOn();
+        printf("ok2");
     }
     else {
         if (detecterIntersection(gauche,centre,droite) || centre || (!gauche && !centre && !droite)) // Si aucun capteur n'a detecte la ligne, on avance quand meme
@@ -48,12 +46,8 @@ void lineFinder(int lcd, bool *obstacleWasDetected){
             LF_turnLeft();
         else if (droite)
             LF_turnRight();
-        
-        if (obstacleWasDetected) {
-            lcdClear(lcd); lcdPrintf(lcd,"Pas d'obstacle !");
-            buzzerOff();
-            *obstacleWasDetected = 0;
-        }
+        lcdClear(lcd); lcdPrintf(lcd,"Pas d'obstacle !");
+        buzzerOff();
     }
 }
 
@@ -90,6 +84,13 @@ int main(int argc, char* argv[]) {
 
     // Line-Finder Initialization
     initSuiveurLigne();
+    
+    // Line-Finder Initialization
+    initDistanceSensor();
+    
+    // buzzer Initialization
+    initBuzzer();
+    buzzerOff();
 
     // Event States Initialization
     int L2state = 0;
@@ -116,8 +117,10 @@ int main(int argc, char* argv[]) {
         else {
             if (buttonIsPressed(SDL_CONTROLLER_BUTTON_A,event)) // Press CROSS to enter Line-Finder Mode
                 mode = MODE_LINEFINDER;
-            else if (buttonIsPressed(SDL_CONTROLLER_BUTTON_B,event)) // Press CIRCLE to leave Line-Finder Mode
+            else if (buttonIsPressed(SDL_CONTROLLER_BUTTON_B,event)) { // Press CIRCLE to leave Line-Finder Mode
+                buzzerOff();
                 mode = MODE_MANUAL;
+            }
 
             if (mode == MODE_LINEFINDER)
                 lineFinder(lcd,&obstacleWasDetected);
@@ -126,6 +129,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    buzzerOff();
     SDL_Quit();
 
     return 0;
