@@ -32,12 +32,12 @@ void lineFinder(int lcd, bool *obstacleWasDetected){
     printf("%d %d %d\n",gauche,centre,droite);
 
     if (obstacleDetect(lcd)) {
-        printf("ok");
         stopMotors();
-        printf("ok1");
-        lcdClear(lcd); lcdPrintf(lcd,"Obstacle proche !");
-        buzzerOn();
-        printf("ok2");
+        if (!(*obstacleWasDetected)) {
+            lcdClear(lcd); lcdPrintf(lcd,"Obstacle proche !");
+            buzzerOn();
+            *obstacleWasDetected = 1;
+        }
     }
     else {
         if (detecterIntersection(gauche,centre,droite) || centre || (!gauche && !centre && !droite)) // Si aucun capteur n'a detecte la ligne, on avance quand meme
@@ -46,12 +46,16 @@ void lineFinder(int lcd, bool *obstacleWasDetected){
             LF_turnLeft();
         else if (droite)
             LF_turnRight();
-        lcdClear(lcd); lcdPrintf(lcd,"Pas d'obstacle !");
-        buzzerOff();
+        if (*obstacleWasDetected) {
+            lcdClear(lcd); lcdPrintf(lcd,"Pas d'obstacle !");
+            buzzerOff();
+            *obstacleWasDetected = 0;
+        }
     }
 }
 
 void manualControl(
+        int lcd,
         SDL_Event event,
         int *L2state,
         int *R2state,
@@ -66,6 +70,7 @@ void manualControl(
     else {
         backward(L2-R2,LX);
     }
+    lcdClear(lcd); lcdPrintf(lcd,"Speed : %d",R2-L2);
 }
 
 int main(int argc, char* argv[]) {
@@ -125,7 +130,7 @@ int main(int argc, char* argv[]) {
             if (mode == MODE_LINEFINDER)
                 lineFinder(lcd,&obstacleWasDetected);
             else if (mode == MODE_MANUAL)
-                manualControl(event,&L2state,&R2state,&LXstate);
+                manualControl(lcd,event,&L2state,&R2state,&LXstate);
         }
     }
 
