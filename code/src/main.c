@@ -34,7 +34,7 @@ void lineFinder(int lcd, bool *obstacleWasDetected){
     if (obstacleDetect(lcd)) {
         stopMotors();
         if (!(*obstacleWasDetected)) {
-            lcdClear(lcd); lcdPrintf(lcd,"Obstacle proche !");
+            lcdClear(lcd); lcdPrintf(lcd,"Near obstacle!");
             buzzerOn();
             *obstacleWasDetected = 1;
         }
@@ -47,7 +47,7 @@ void lineFinder(int lcd, bool *obstacleWasDetected){
         else if (droite)
             LF_turnRight();
         if (*obstacleWasDetected) {
-            lcdClear(lcd); lcdPrintf(lcd,"Pas d'obstacle !");
+            lcdClear(lcd); lcdPrintf(lcd,"No obstacles!");
             buzzerOff();
             *obstacleWasDetected = 0;
         }
