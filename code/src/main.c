@@ -54,16 +54,10 @@ void lineFinder(int lcd, bool *obstacleWasDetected){
     }
 }
 
-void manualControl(
-        int lcd,
-        SDL_Event event,
-        int *L2state,
-        int *R2state,
-        int *LXstate) 
-{
-    int R2 = triggerValue(SDL_CONTROLLER_AXIS_TRIGGERRIGHT,event,R2state);
-    int L2 = triggerValue(SDL_CONTROLLER_AXIS_TRIGGERLEFT,event,L2state);
-    int LX = axisValue(SDL_CONTROLLER_AXIS_LEFTX,event,LXstate);
+void manualControl(int lcd, SDL_GameController *controller) {
+    int R2 = triggerValue(controller,SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+    int L2 = triggerValue(controller,SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+    int LX = axisValue(controller,SDL_CONTROLLER_AXIS_LEFTX);
     if (R2 >= L2) {
         forward(R2-L2,LX);
     }
@@ -97,14 +91,10 @@ int main(int argc, char* argv[]) {
     initBuzzer();
     buzzerOff();
 
-    // Event States Initialization
-    int L2state = 0;
-    int R2state = 0;
-    int LXstate = 0;
-
     // Boucle principale
     SDL_Event event;
     bool exit = 0;
+    bool controllerConnected = 0;
     int mode = MODE_MANUAL;
     bool obstacleWasDetected = 0;
     while (!exit) {
@@ -114,15 +104,17 @@ int main(int argc, char* argv[]) {
         else if (event.cdevice.type == SDL_CONTROLLERDEVICEADDED) {
             lcdClear(lcd); lcdPrintf(lcd,"Controller      connected");
             controller = SDL_GameControllerOpen(0);
+            controllerConnected = 1;
         }
         else if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
             lcdClear(lcd); lcdPrintf(lcd,"Controller      disconnected");
             SDL_GameControllerClose(controller);
+            controllerConnected = 0;
         }
-        else {
-            if (buttonIsPressed(SDL_CONTROLLER_BUTTON_A,event)) // Press CROSS to enter Line-Finder Mode
+        else if (controllerConnected) {
+            if (buttonIsBeingPressed(controller,SDL_CONTROLLER_BUTTON_A)) // Press CROSS to enter Line-Finder Mode
                 mode = MODE_LINEFINDER;
-            else if (buttonIsPressed(SDL_CONTROLLER_BUTTON_B,event)) { // Press CIRCLE to leave Line-Finder Mode
+            else if (buttonIsBeingPressed(controller,SDL_CONTROLLER_BUTTON_B)) { // Press CIRCLE to leave Line-Finder Mode
                 buzzerOff();
                 mode = MODE_MANUAL;
             }
@@ -130,7 +122,7 @@ int main(int argc, char* argv[]) {
             if (mode == MODE_LINEFINDER)
                 lineFinder(lcd,&obstacleWasDetected);
             else if (mode == MODE_MANUAL)
-                manualControl(lcd,event,&L2state,&R2state,&LXstate);
+                manualControl(lcd,controller);
         }
     }
 

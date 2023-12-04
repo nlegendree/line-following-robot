@@ -14,9 +14,9 @@
 SDL_GameController* initController();
 bool buttonIsPressed(int BUTTON, SDL_Event event);
 bool buttonIsReleased(int BUTTON, SDL_Event event);
-bool buttonIsBeingPressed(int BUTTON, SDL_Event event, bool *state);
-int triggerValue(int TRIGGER, SDL_Event event, int *state);
-int axisValue(int AXIS, SDL_Event event, int *state);
+bool buttonIsBeingPressed(SDL_GameController *controller, SDL_GameControllerButton BUTTON);
+int triggerValue(SDL_GameController *controller, SDL_GameControllerAxis TRIGGER);
+int axisValue(SDL_GameController *controller, SDL_GameControllerAxis AXIS);
 
 
 #endif

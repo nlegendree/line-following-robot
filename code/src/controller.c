@@ -17,26 +17,17 @@ bool buttonIsReleased(int BUTTON, SDL_Event event) {
     return event.type == SDL_CONTROLLERBUTTONUP && event.cbutton.button == BUTTON;
 }
 
-bool buttonIsBeingPressed(int BUTTON, SDL_Event event, bool *state) {
-    if (buttonIsPressed(BUTTON,event))
-        *state = 1;
-    if (buttonIsReleased(BUTTON,event))
-        *state = 0;
-    return *state;
+bool buttonIsBeingPressed(SDL_GameController *controller, SDL_GameControllerButton BUTTON) {
+    return SDL_GameControllerGetButton(controller,BUTTON);
 }
 
-int triggerValue(int TRIGGER, SDL_Event event, int *state) {
-    if (event.caxis.type == SDL_CONTROLLERAXISMOTION && event.caxis.axis == TRIGGER)
-        *state = event.caxis.value;
-    return *state;
+int triggerValue(SDL_GameController *controller, SDL_GameControllerAxis TRIGGER) {
+    return SDL_GameControllerGetAxis(controller,TRIGGER);
 }
 
-int axisValue(int AXIS, SDL_Event event, int *state) {
-    if (event.caxis.type == SDL_CONTROLLERAXISMOTION && event.caxis.axis == AXIS) {
-        if (event.caxis.value <= DEADZONE*MIN_AXIS || event.caxis.value >= DEADZONE*MAX_AXIS)
-            *state = event.caxis.value;
-        else
-            *state = 0;
-    }
-    return *state;
+int axisValue(SDL_GameController *controller, SDL_GameControllerAxis AXIS) {
+    int val = SDL_GameControllerGetAxis(controller,AXIS);
+    if (val <= DEADZONE*MIN_AXIS || val >= DEADZONE*MAX_AXIS)
+        return val;
+    return 0;
 }
