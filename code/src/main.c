@@ -17,40 +17,34 @@
 #define MODE_MANUAL     0
 #define MODE_LINEFINDER 1
 
-bool obstacleDetect(int lcd) {
+bool obstacleDetect() {
     int distance = getDistance();
-    if (distance < 5) //Bug si obstacle trop proche (ne devrait pas arriver) valeur à 1200 environ à vérifier en TP.
+    printf("%d\n",distance);
+    if (distance < 10) 
         return 1;
-
     return 0;
 }
 
-void lineFinder(int lcd, bool *obstacleWasDetected){
+void lineFinder(int lcd){
     bool gauche = detecterLigne(PIN_SUIVEUR_GAUCHE);
     bool centre = detecterLigne(PIN_SUIVEUR_CENTRE);
     bool droite = detecterLigne(PIN_SUIVEUR_DROIT);
     printf("%d %d %d\n",gauche,centre,droite);
 
-    if (obstacleDetect(lcd)) {
+    if (obstacleDetect()) {
         stopMotors();
-        if (!(*obstacleWasDetected)) {
-            lcdClear(lcd); lcdPrintf(lcd,"Near obstacle!");
-            buzzerOn();
-            *obstacleWasDetected = 1;
-        }
+        lcdClear(lcd); lcdPrintf(lcd,"Near obstacle!");
+        buzzerOn();
     }
     else {
-        if (detecterIntersection(gauche,centre,droite) || centre || (!gauche && !centre && !droite)) // Si aucun capteur n'a detecte la ligne, on avance quand meme
+        if (detecterIntersection(gauche,centre,droite) || centre)
             LF_forward();
         else if (gauche)
             LF_turnLeft();
         else if (droite)
             LF_turnRight();
-        if (*obstacleWasDetected) {
-            lcdClear(lcd); lcdPrintf(lcd,"No obstacles!");
-            buzzerOff();
-            *obstacleWasDetected = 0;
-        }
+        lcdClear(lcd); lcdPrintf(lcd,"No obstacles!");
+        buzzerOff();
     }
 }
 
@@ -96,7 +90,6 @@ int main(int argc, char* argv[]) {
     bool exit = 0;
     bool controllerConnected = 0;
     int mode = MODE_MANUAL;
-    bool obstacleWasDetected = 0;
     while (!exit) {
         SDL_PollEvent(&event);
         if (event.type == SDL_QUIT)
@@ -120,7 +113,7 @@ int main(int argc, char* argv[]) {
             }
 
             if (mode == MODE_LINEFINDER)
-                lineFinder(lcd,&obstacleWasDetected);
+                lineFinder(lcd);
             else if (mode == MODE_MANUAL)
                 manualControl(lcd,controller);
         }
