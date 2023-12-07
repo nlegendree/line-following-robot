@@ -97,7 +97,7 @@ int main(int argc, char* argv[]) {
     lcd = initLCD();
 
     // Controller Initialization
-    lcdClear(lcd); lcdPrintf(lcd,"Waiting for     controller...");
+    //lcdClear(lcd); lcdPrintf(lcd,"Waiting for     controller...");
     SDL_GameController *controller = initController();
 
     // Motors Initialization
@@ -127,12 +127,12 @@ int main(int argc, char* argv[]) {
         if (event.type == SDL_QUIT)
             exit = 1;
         else if (event.cdevice.type == SDL_CONTROLLERDEVICEADDED) {
-            lcdClear(lcd); lcdPrintf(lcd,"Controller      connected");
+            //lcdClear(lcd); lcdPrintf(lcd,"Controller      connected");
             controller = SDL_GameControllerOpen(0);
             controllerConnected = 1;
         }
         else if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
-            lcdClear(lcd); lcdPrintf(lcd,"Controller      disconnected");
+            //lcdClear(lcd); lcdPrintf(lcd,"Controller      disconnected");
             SDL_GameControllerClose(controller);
             controllerConnected = 0;
         }
