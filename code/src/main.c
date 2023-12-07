@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
     initBuzzer();
     buzzerOff();
 
-    // Distance
+    // LCD and Distance Sensor Thread Creation
     piThreadCreate(lcdPrintAndGetDistance);
 
     // Boucle principale
