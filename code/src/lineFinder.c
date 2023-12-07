@@ -28,9 +28,9 @@ void LF_forward() {
 }
 
 void LF_turnLeft() {
-    forward(LF_SPEED,MIN_AXIS);
+    forward(LF_SPEED_ROTATION,MIN_AXIS);
 }
 
 void LF_turnRight() {
-    forward(LF_SPEED,MAX_AXIS);
+    forward(LF_SPEED_ROTATION,MAX_AXIS);
 }
