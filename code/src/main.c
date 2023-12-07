@@ -30,7 +30,7 @@ PI_THREAD(lcdPrintSpeedAndDistance) {
     while (!exitSDL) {
         if (mode == MODE_LINEFINDER) {
             int distance = getDistance();
-            if (distance <= 10) {
+            if (distance <= STOP_DISTANCE) {
                 lcdClear(lcd); lcdPrintf(lcd,"Near obstacle!");
                 nearObstacle = 1;
             }
