@@ -24,10 +24,10 @@
 int lcd;
 int mode;
 bool nearObstacle;
-bool exit;
+bool exitSDL;
 
 PI_THREAD(lcdPrintSpeedAndDistance) {
-    while (!exit) {
+    while (!exitSDL) {
         if (mode == MODE_LINEFINDER) {
             int distance = getDistance();
             if (distance <= 10) {
@@ -125,15 +125,15 @@ int main(int argc, char* argv[]) {
 
     // Boucle principale
     SDL_Event event;
-    exit = 0;
+    exitSDL = 0;
     bool controllerConnected = 0;
     mode = MODE_MANUAL;
     nearObstacle = 0;
     int motorState = FORWARD;
-    while (!exit) {
+    while (!exitSDL) {
         SDL_PollEvent(&event);
         if (event.type == SDL_QUIT)
-            exit = 1;
+            exitSDL = 1;
         else if (event.cdevice.type == SDL_CONTROLLERDEVICEADDED) {
             //lcdClear(lcd); lcdPrintf(lcd,"Controller      connected");
             controller = SDL_GameControllerOpen(0);
