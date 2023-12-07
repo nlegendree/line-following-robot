@@ -146,6 +146,7 @@ int main(int argc, char* argv[]) {
         else if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
             SDL_GameControllerClose(controller);
             stopMotors();
+            mode = MODE_MANUAL;
             buzzerOff();
             controllerConnected = 0;
         }
