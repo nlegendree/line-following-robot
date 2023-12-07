@@ -22,12 +22,24 @@
 #define TURN_RIGHT      2
 
 int lcd;
+int mode;
+bool nearObstacle;
+bool exit;
 
-PI_THREAD(printDistance) {
-    while (1) {
-        int distance = getDistance();
-        lcdClear(lcd); lcdPrintf(lcd,"%d cm",distance);
-        delay(500);
+PI_THREAD(lcdPrintSpeedAndDistance) {
+    while (!exit) {
+        if (mode == MODE_LINEFINDER) {
+            int distance = getDistance();
+            if (distance <= 10) {
+                lcdClear(lcd); lcdPrintf(lcd,"Near obstacle!");
+                nearObstacle = 1;
+            }
+            else {
+                lcdClear(lcd); lcdPrintf(lcd,"%d cm",distance);
+                nearObstacle = 0;
+            }
+            delay(500);
+        }
     }
 }
 
@@ -37,12 +49,8 @@ void lineFinder(int lcd, int *motorState){
     bool droite = detecterLigne(PIN_SUIVEUR_DROIT);
     printf("%d %d %d\n",gauche,centre,droite);
     
-    //int distance = getDistance();
-    int distance = 11;
-    
-    if (distance <= 10) {
+    if (nearObstacle) {
         stopMotors();
-        //lcdClear(lcd); lcdPrintf(lcd,"Near obstacle!");
         buzzerOn();
     }
     else {
@@ -71,7 +79,6 @@ void lineFinder(int lcd, int *motorState){
             LF_turnRight();
             *motorState = TURN_RIGHT;
         }
-        //lcdClear(lcd); lcdPrintf(lcd,"%d cm",distance);
         buzzerOff();
     }
 }
@@ -86,7 +93,7 @@ void manualControl(int lcd, SDL_GameController *controller) {
     else {
         backward(L2-R2,LX);
     }
-    //lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/200));
+    lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/200));
 }
 
 int main(int argc, char* argv[]) {
@@ -97,7 +104,7 @@ int main(int argc, char* argv[]) {
     lcd = initLCD();
 
     // Controller Initialization
-    //lcdClear(lcd); lcdPrintf(lcd,"Waiting for     controller...");
+    lcdClear(lcd); lcdPrintf(lcd,"Waiting for     controller...");
     SDL_GameController *controller = initController();
 
     // Motors Initialization
@@ -114,13 +121,14 @@ int main(int argc, char* argv[]) {
     buzzerOff();
 
     // Distance
-    piThreadCreate(printDistance);
+    piThreadCreate(lcdPrintSpeedAndDistance);
 
     // Boucle principale
     SDL_Event event;
-    bool exit = 0;
+    exit = 0;
     bool controllerConnected = 0;
-    int mode = MODE_MANUAL;
+    mode = MODE_MANUAL;
+    nearObstacle = 0;
     int motorState = FORWARD;
     while (!exit) {
         SDL_PollEvent(&event);
