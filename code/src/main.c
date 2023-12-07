@@ -21,7 +21,9 @@
 #define TURN_LEFT       1
 #define TURN_RIGHT      2
 
-PI_THREAD printDistance(int lcd) {
+int lcd;
+
+PI_THREAD(printDistance) {
     while (1) {
         int distance = getDistance();
         lcdClear(lcd); lcdPrintf(lcd,"%d cm",distance);
@@ -92,7 +94,7 @@ int main(int argc, char* argv[]) {
     wiringPiSetupGpio();
     
     // LCD Initialization
-    int lcd = initLCD();
+    lcd = initLCD();
 
     // Controller Initialization
     lcdClear(lcd); lcdPrintf(lcd,"Waiting for     controller...");
@@ -112,7 +114,7 @@ int main(int argc, char* argv[]) {
     buzzerOff();
 
     // Distance
-    piThreadCreate(printDistance(&lcd));
+    piThreadCreate(printDistance);
 
     // Boucle principale
     SDL_Event event;
