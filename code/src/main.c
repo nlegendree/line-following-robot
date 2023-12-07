@@ -112,7 +112,7 @@ int main(int argc, char* argv[]) {
     buzzerOff();
 
     // Distance
-    piThreadCreate(printDistance(lcd));
+    piThreadCreate(printDistance(&lcd));
 
     // Boucle principale
     SDL_Event event;
