@@ -21,6 +21,14 @@
 #define TURN_LEFT       1
 #define TURN_RIGHT      2
 
+PI_THREAD printDistance(int lcd) {
+    while (1) {
+        int distance = getDistance();
+        lcdClear(lcd); lcdPrintf(lcd,"%d cm",distance);
+        delay(500);
+    }
+}
+
 void lineFinder(int lcd, int *motorState){
     bool gauche = detecterLigne(PIN_SUIVEUR_GAUCHE);
     bool centre = detecterLigne(PIN_SUIVEUR_CENTRE);
@@ -32,7 +40,7 @@ void lineFinder(int lcd, int *motorState){
     
     if (distance <= 10) {
         stopMotors();
-        lcdClear(lcd); lcdPrintf(lcd,"Near obstacle!");
+        //lcdClear(lcd); lcdPrintf(lcd,"Near obstacle!");
         buzzerOn();
     }
     else {
@@ -61,7 +69,7 @@ void lineFinder(int lcd, int *motorState){
             LF_turnRight();
             *motorState = TURN_RIGHT;
         }
-        lcdClear(lcd); lcdPrintf(lcd,"%d cm",distance);
+        //lcdClear(lcd); lcdPrintf(lcd,"%d cm",distance);
         buzzerOff();
     }
 }
@@ -76,7 +84,7 @@ void manualControl(int lcd, SDL_GameController *controller) {
     else {
         backward(L2-R2,LX);
     }
-    lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/200));
+    //lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/200));
 }
 
 int main(int argc, char* argv[]) {
@@ -99,9 +107,12 @@ int main(int argc, char* argv[]) {
     // Line-Finder Initialization
     initDistanceSensor();
     
-    // buzzer Initialization
+    // Buzzer Initialization
     initBuzzer();
     buzzerOff();
+
+    // Distance
+    piThreadCreate(printDistance(lcd));
 
     // Boucle principale
     SDL_Event event;
