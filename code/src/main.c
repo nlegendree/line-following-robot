@@ -21,10 +21,8 @@
 #define TURN_LEFT       1
 #define TURN_RIGHT      2
 
-int lcd;
-int mode;
-bool nearObstacle;
-bool exitSDL;
+int lcd, mode, R2, L2, LX;
+bool nearObstacle, exitSDL;
 
 PI_THREAD(lcdPrintSpeedAndDistance) {
     while (!exitSDL) {
@@ -38,8 +36,11 @@ PI_THREAD(lcdPrintSpeedAndDistance) {
                 lcdClear(lcd); lcdPrintf(lcd,"%d cm",distance);
                 nearObstacle = 0;
             }
-            delay(500);
         }
+        else if (mode == MODE_MANUAL) {
+            lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/200));
+        }
+        delay(500);
     }
     return 0;
 }
@@ -85,16 +86,15 @@ void lineFinder(int lcd, int *motorState){
 }
 
 void manualControl(int lcd, SDL_GameController *controller) {
-    int R2 = triggerValue(controller,SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
-    int L2 = triggerValue(controller,SDL_CONTROLLER_AXIS_TRIGGERLEFT);
-    int LX = axisValue(controller,SDL_CONTROLLER_AXIS_LEFTX);
+    R2 = triggerValue(controller,SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+    L2 = triggerValue(controller,SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+    LX = axisValue(controller,SDL_CONTROLLER_AXIS_LEFTX);
     if (R2 >= L2) {
         forward(R2-L2,LX);
     }
     else {
         backward(L2-R2,LX);
     }
-    lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/200));
 }
 
 int main(int argc, char* argv[]) {
