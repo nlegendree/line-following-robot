@@ -38,9 +38,9 @@ PI_THREAD(lcdPrintSpeedAndDistance) {
             }
         }
         else if (mode == MODE_MANUAL) {
-            lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/200));
+            lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/252));
         }
-        delay(500);
+        delay(100);
     }
     return 0;
 }
