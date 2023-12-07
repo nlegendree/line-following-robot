@@ -22,23 +22,28 @@
 #define TURN_RIGHT      2
 
 int lcd, mode, R2, L2, LX;
-bool nearObstacle, exitSDL;
+bool controllerConnected, nearObstacle, exitSDL;
 
-PI_THREAD(lcdPrintSpeedAndDistance) {
+PI_THREAD(lcdPrintAndGetDistance) {
     while (!exitSDL) {
-        if (mode == MODE_LINEFINDER) {
-            int distance = getDistance();
-            if (distance <= STOP_DISTANCE) {
-                lcdClear(lcd); lcdPrintf(lcd,"Near obstacle!");
-                nearObstacle = 1;
+        if (controllerConnected) {
+            if (mode == MODE_LINEFINDER) {
+                int distance = getDistance();
+                if (distance <= STOP_DISTANCE) {
+                    lcdClear(lcd); lcdPrintf(lcd,"Near obstacle!");
+                    nearObstacle = 1;
+                }
+                else {
+                    lcdClear(lcd); lcdPrintf(lcd,"%d cm",distance);
+                    nearObstacle = 0;
+                }
             }
-            else {
-                lcdClear(lcd); lcdPrintf(lcd,"%d cm",distance);
-                nearObstacle = 0;
+            else if (mode == MODE_MANUAL) {
+                lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/252));
             }
         }
-        else if (mode == MODE_MANUAL) {
-            lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/252));
+        else {
+            lcdClear(lcd); lcdPrintf(lcd,"Waiting for     controller...");
         }
         delay(100);
     }
@@ -105,7 +110,6 @@ int main(int argc, char* argv[]) {
     lcd = initLCD();
 
     // Controller Initialization
-    lcdClear(lcd); lcdPrintf(lcd,"Waiting for     controller...");
     SDL_GameController *controller = initController();
 
     // Motors Initialization
@@ -122,12 +126,12 @@ int main(int argc, char* argv[]) {
     buzzerOff();
 
     // Distance
-    piThreadCreate(lcdPrintSpeedAndDistance);
+    piThreadCreate(lcdPrintAndGetDistance);
 
     // Boucle principale
     SDL_Event event;
     exitSDL = 0;
-    bool controllerConnected = 0;
+    controllerConnected = 0;
     mode = MODE_MANUAL;
     nearObstacle = 0;
     int motorState = FORWARD;
@@ -136,12 +140,10 @@ int main(int argc, char* argv[]) {
         if (event.type == SDL_QUIT)
             exitSDL = 1;
         else if (event.cdevice.type == SDL_CONTROLLERDEVICEADDED) {
-            //lcdClear(lcd); lcdPrintf(lcd,"Controller      connected");
             controller = SDL_GameControllerOpen(0);
             controllerConnected = 1;
         }
         else if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
-            //lcdClear(lcd); lcdPrintf(lcd,"Controller      disconnected");
             SDL_GameControllerClose(controller);
             controllerConnected = 0;
         }
