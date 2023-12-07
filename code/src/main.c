@@ -41,6 +41,7 @@ PI_THREAD(lcdPrintSpeedAndDistance) {
             delay(500);
         }
     }
+    return;
 }
 
 void lineFinder(int lcd, int *motorState){
