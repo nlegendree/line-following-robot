@@ -45,7 +45,7 @@ PI_THREAD(lcdPrintAndGetDistance) {
         else {
             lcdClear(lcd); lcdPrintf(lcd,"Waiting for     controller...");
         }
-        delay(100);
+        delay(200);
     }
     return 0;
 }
@@ -145,6 +145,8 @@ int main(int argc, char* argv[]) {
         }
         else if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
             SDL_GameControllerClose(controller);
+            stopMotors();
+            buzzerOff();
             controllerConnected = 0;
         }
         else if (controllerConnected) {
