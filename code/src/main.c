@@ -27,7 +27,8 @@ void lineFinder(int lcd, int *motorState){
     bool droite = detecterLigne(PIN_SUIVEUR_DROIT);
     printf("%d %d %d\n",gauche,centre,droite);
     
-    int distance = getDistance();
+    //int distance = getDistance();
+    int distance = 11;
     
     if (distance <= 10) {
         stopMotors();
@@ -75,7 +76,7 @@ void manualControl(int lcd, SDL_GameController *controller) {
     else {
         backward(L2-R2,LX);
     }
-    lcdClear(lcd); lcdPrintf(lcd,"%d km/h",R2-L2);
+    lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/200));
 }
 
 int main(int argc, char* argv[]) {
