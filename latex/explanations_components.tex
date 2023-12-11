@@ -1,9 +1,37 @@
-Pour répondre aux contraintes précisées en introduction, nous avons choisi différents composants, parfois plusieurs fois les mêmes. Nous allons expliciter nos choix dans la section ci-dessous :
+Pour répondre aux cahier des charger évoqué en introduction, nous avons choisi différents composants, parfois plusieurs fois les mêmes. Nous allons expliciter nos choix dans la section ci-dessous :
 
 \subsection{Raspberry Pi}
-\subsection{LineFinder}
+La Raspberry Pi a été cruciale dans notre projet en tant que cerveau central du robot. Elle a pris en charge la gestion des capteurs, la logique de contrôle, et les interactions avec les composants matériels. Grâce à sa connectivité GPIO, elle a permis une intégration facile avec les capteurs de suivi de ligne, les capteurs de distance, et d'autres périphériques. De plus, la possibilité de programmer en langage C a facilité le développement du logiciel embarqué car nous suivons en parallèle un cours sur ce même language.
+
+\subsection{Capteur infrarouge TCRT5000}
+Les capteurs infrarouge, tels que le modèle TCRT5000 que nous avons choisi, jouent un rôle essentiel en tant que suiveurs de ligne dans notre robot. Leur principe de fonctionnement repose sur l'émission d'un faisceau infrarouge et la détection du signal réfléchi. Ce capteur est composé d'une LED infrarouge et d'un phototransistor, permettant de mesurer l'intensité du signal réfléchi. En suivant une ligne, le capteur détecte les variations d'intensité du signal infrarouge en fonction de la surface rencontrée, ce qui permet au robot de maintenir sa trajectoire ou non.
+
+En effet, dans notre cas, nous avons utilisé 3 LineFinder : un à gauche, un central et un à droite. Cela permet de couvrir toute la zone nécessaire pour suivre la ligne, détecter les intersections et tourner efficacement.
+
+Dans un premier temps, il faut savoir que nous avons travaillé avec un autre type de capteur infrarouge type "LineFinder". Cela n'a eu aucune conséquence sur la suite du projet car leur fonctionnement est quasiment identique aux capteurs finaux.
+
+Le choix du capteur infrarouge s'aligne parfaitement avec les exigences du cahier des charges initial. La facilité d'intégration avec le Raspberry Pi, combinée à leur réactivité, offre une solution fiable pour le suivi de ligne, permettant au robot de naviguer de manière fluide tout en respectant les intersections définies dans le cahier des charges.
+
 \subsection{Moteurs et L293D}
+Les moteurs directement reliés aux roues de notre robot constituent le cœur de sa mobilité.
+
+Pour assurer un contrôle précis et bidirectionnel de ces moteurs, nous avons choisi d'utiliser la carte de commande de moteur L293D. Cette carte offre une interface simple mais efficace entre le Raspberry Pi et les moteurs, permettant de réguler la vitesse et la direction de manière précise. Le L293D fonctionne en amplifiant les signaux de commande du Raspberry Pi pour fournir une alimentation adéquate aux moteurs, facilitant ainsi le contrôle des mouvements du robot.
+
+La sélection du L293D s'inscrit parfaitement dans les exigences spécifiées dans notre cahier des charges initial. Sa capacité à gérer deux moteurs simultanément, à inverser la direction de rotation, et à ajuster la vitesse répond à notre besoin de contrôle moteur bidirectionnel pour le suivi de ligne et les manœuvres aux intersections.
+
+À préciser qu'au début du projet, nous avons utilisé une carte MAKERDRIVE qui nous a posé beaucoup trop de problèmes à nous et aux autres groupes ce qui a justifié notree changement vers la L293D. (Cela sera détaillé dans la partie difficultés)
+
 \subsection{Capteur d'ultrasons HS-SR04}
-\subsection{Buzzer}
+Les capteurs ultrasons, tels que le modèle HS-SR04 que nous avons intégré à notre robot, jouent un rôle crucial dans la détection des obstacles et la mesure de la distance frontale. Grâce à leur principe de fonctionnement, émettant des ondes sonores et mesurant le temps nécessaire à leur retour après réflexion sur un obstacle, ces capteurs fournissent une estimation précise de la distance entre le robot et tout objet présent sur sa trajectoire.
+
+Le choix du capteur ultrasonique HS-SR04 découle directement des exigences spécifiées dans notre cahier des charges initial. Sa portée étendue et sa résolution précise permettent au robot de détecter les obstacles à des distances variées, contribuant ainsi à l'alerte précoce et à la prise de décision en temps réel. Cette fonctionnalité est essentielle pour respecter les critères du cahier des charges, notamment l'alerte en cas d'obstacle, l'arrêt d'urgence, et l'attente en présence d'obstacles.
+
+\subsection{Active buzzer}
+L'Active Buzzer, le composant d'alerte d'obstacle est essentiel pour notre robot suiveur de ligne. Conformément aux exigences énoncées dans notre cahier des charges initial, l'Active Buzzer est activé dès qu'un obstacle est détecté par les capteurs ultrasons. Cette alerte sonore, combinée à l'affichage sur l'écran LCD, permet d'assurer une notification immédiate de la proximité d'un objet. Cette fonctionnalité contribue directement à la sécurité du robot, avertissant les opérateurs et les personnes environnantes en cas de risque potentiel.
+
 \subsection{LCD1602 et I2C Interface Module}
+L'écran LCD1602, contrôlé via l'interface I2C, représente un élément central dans notre robot suiveur de ligne en fournissant une interface visuelle pour afficher des informations cruciales conformes aux spécifications du cahier des charges initial. Sa capacité à présenter en temps réel les mouvements programmés du robot, les distances mesurées par les capteurs, ainsi que l'état de connexion de la manette, offre une visibilité immédiate sur le statut opérationnel du robot.
+
+L'utilisation de l'I2C simplifie la connectivité entre l'écran LCD et le Raspberry Pi, permettant une intégration aisée dans notre système embarqué. L'écran LCD1602 ajoute une couche d'interactivité en fournissant des informations en temps réel aux opérateurs, facilitant la surveillance du robot, la compréhension de son environnement, et l'ajustement des paramètres de déplacement. En respectant ainsi les critères détaillés dans le cahier des charges, l'écran LCD joue un rôle essentiel dans l'amélioration de l'expérience d'utilisation du robot suiveur de ligne.
+
 \subsection{Manette de PS5}
