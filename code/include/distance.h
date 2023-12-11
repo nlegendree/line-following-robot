@@ -2,7 +2,8 @@
 #define __DISTANCE__
 
 
-#define STOP_DISTANCE 20
+#define DISPLAY_DISTANCE    50
+#define STOP_DISTANCE       20
 
 void initDistanceSensor();
 int getDistance();

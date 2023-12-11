@@ -21,36 +21,53 @@
 #define TURN_LEFT       1
 #define TURN_RIGHT      2
 
-int lcd, mode, R2, L2, LX;
+int lcd, mode, motorState, R2, L2, LX;
 bool controllerConnected, nearObstacle, exitSDL;
 
 PI_THREAD(lcdPrintAndGetDistance) {
     while (!exitSDL) {
+        lcdClear(lcd);
         if (controllerConnected) {
             if (mode == MODE_LINEFINDER) {
                 int distance = getDistance();
-                if (distance <= STOP_DISTANCE) {
-                    lcdClear(lcd); lcdPrintf(lcd,"Near obstacle!");
-                    nearObstacle = 1;
+                if (distance <= DISPLAY_DISTANCE) {
+                    if (distance <= STOP_DISTANCE) {
+                        lcdPrintf(lcd,"Obstacle too    close!");
+                        nearObstacle = 1;
+                    }
+                    else {
+                        lcdPrintf(lcd,"Obstacle : %d cm",distance);
+                        nearObstacle = 0;
+                    }
                 }
                 else {
-                    lcdClear(lcd); lcdPrintf(lcd,"%d cm",distance);
+                    switch(motorState) {
+                    case FORWARD:
+                        lcdPrintf(lcd,"Moving forward");
+                        break;
+                    case TURN_LEFT:
+                        lcdPrintf(lcd,"Truning left");
+                        break;
+                    case TURN_RIGHT:
+                        lcdPrintf(lcd,"Turning right");
+                        break;
+                    }
                     nearObstacle = 0;
                 }
             }
             else if (mode == MODE_MANUAL) {
-                lcdClear(lcd); lcdPrintf(lcd,"%d km/h",(int)((R2-L2)/252));
+                lcdPrintf(lcd,"Speed : %d km/h",(int)((R2-L2)/252));
             }
         }
         else {
-            lcdClear(lcd); lcdPrintf(lcd,"Waiting for     controller...");
+            lcdPrintf(lcd,"Waiting for     controller...");
         }
-        delay(200);
+        delay(100);
     }
     return 0;
 }
 
-void lineFinder(int lcd, int *motorState){
+void lineFinder(int lcd){
     bool gauche = detecterLigne(PIN_SUIVEUR_GAUCHE);
     bool centre = detecterLigne(PIN_SUIVEUR_CENTRE);
     bool droite = detecterLigne(PIN_SUIVEUR_DROIT);
@@ -62,7 +79,7 @@ void lineFinder(int lcd, int *motorState){
     }
     else {
         if (!gauche && !centre && !droite) {
-            switch(*motorState) {
+            switch(motorState) {
                 case FORWARD:
                     LF_forward();
                     break;
@@ -76,15 +93,15 @@ void lineFinder(int lcd, int *motorState){
         }
         else if (detecterIntersection(gauche,centre,droite) || centre) {
             LF_forward();
-            *motorState = FORWARD;
+            motorState = FORWARD;
         }
         else if (gauche) {
             LF_turnLeft();
-            *motorState = TURN_LEFT;
+            motorState = TURN_LEFT;
         }
         else if (droite) {
             LF_turnRight();
-            *motorState = TURN_RIGHT;
+            motorState = TURN_RIGHT;
         }
         buzzerOff();
     }
@@ -134,7 +151,7 @@ int main(int argc, char* argv[]) {
     controllerConnected = 0;
     mode = MODE_MANUAL;
     nearObstacle = 0;
-    int motorState = FORWARD;
+    motorState = FORWARD;
     while (!exitSDL) {
         SDL_PollEvent(&event);
         if (event.type == SDL_QUIT)
@@ -160,7 +177,7 @@ int main(int argc, char* argv[]) {
             }
 
             if (mode == MODE_LINEFINDER)
-                lineFinder(lcd,&motorState);
+                lineFinder(lcd);
             else if (mode == MODE_MANUAL)
                 manualControl(lcd,controller);
         }
