@@ -56,7 +56,7 @@ PI_THREAD(lcdPrintAndGetDistance) {
                 }
             }
             else if (mode == MODE_MANUAL) {
-                lcdPrintf(lcd,"Speed : %d km/h",abs((int)((R2-L2)/252)));
+                lcdPrintf(lcd,"Speed : %d kph",abs((int)((R2-L2)/252)));
             }
         }
         else {
