@@ -6,7 +6,7 @@
 
 #define PIN_SUIVEUR_GAUCHE  17
 #define PIN_SUIVEUR_CENTRE  22
-#define PIN_SUIVEUR_DROIT   27
+#define PIN_SUIVEUR_DROIT   10
 
 #define PIN_TRIG            25
 #define PIN_ECHO            8
