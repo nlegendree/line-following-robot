@@ -18,6 +18,10 @@ $(BINDIR)/$(EXEC) : $(OBJS)
 $(SRCDIR)/%.o : $(SRCDIR)/%.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
+pdf :
+	cd $(LATEXDIR); pdflatex rapport.tex
+	rm -f ./$(LATEXDIR)/*.fls ./$(LATEXDIR)/*.fdb_latexmk ./$(LATEXDIR)/*.aux ./$(LATEXDIR)/*.log
+
 clean :
 	rm -f $(BINDIR)/$(EXEC)
 	rm -f $(SRCDIR)/*.o
