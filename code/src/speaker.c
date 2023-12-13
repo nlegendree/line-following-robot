@@ -32,7 +32,7 @@ void playAudio(int button) {
     }
     if (arrowPressed != -1){
         const char command[100];
-        sprintf(command, "mpg123 %s", audioFiles[arrowPressed-1]);
-        system(command)
+        sprintf(command, "mpg123 %s", audioFiles[arrowPressed-1]);  // mpg123 permet de lire fichier mp3 -> sprintf permet de formater une Cdc
+        system(command) // permet de lancer l'execution d'une commande
     }
 }
