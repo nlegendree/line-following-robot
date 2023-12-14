@@ -30,7 +30,7 @@ void playAudio(SDL_Event event) {
                 break;
         }
         if (arrowPressed != -1){
-            const char command[100];
+            char command[100];
             sprintf(command, "mpg123 %s &", audioFiles[arrowPressed]);  // mpg123 permet de lire fichier mp3 -> sprintf permet de formater une Cdc
             system(command); // permet de lancer l'execution d'une commande
         }
