@@ -4,6 +4,8 @@
 
 #define PIN_BUZZER          14
 
+#define PIN_SPEAKER         0
+
 #define PIN_SUIVEUR_GAUCHE  17
 #define PIN_SUIVEUR_CENTRE  22
 #define PIN_SUIVEUR_DROIT   10

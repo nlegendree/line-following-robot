@@ -5,6 +5,7 @@
 #include "motors.h"
 #include "buzzer.h"
 #include "distance.h"
+#include "speaker.h"
 
 #include <SDL2/SDL.h>
 #include <wiringPi.h>
@@ -138,6 +139,9 @@ int main(int argc, char* argv[]) {
     // Line-Finder Initialization
     initDistanceSensor();
     
+    // Speaker Initialization
+    initSpeaker();
+
     // Buzzer Initialization
     initBuzzer();
     buzzerOff();
@@ -180,6 +184,8 @@ int main(int argc, char* argv[]) {
                 lineFinder(lcd);
             else if (mode == MODE_MANUAL)
                 manualControl(lcd,controller);
+
+            playAudio(event);
         }
     }
 
