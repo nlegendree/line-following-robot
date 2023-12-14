@@ -185,7 +185,7 @@ int main(int argc, char* argv[]) {
             else if (mode == MODE_MANUAL)
                 manualControl(lcd,controller);
 
-            playAudio(event);
+            playAudio(event,argv[0]);
         }
     }
 
