@@ -43,16 +43,16 @@ void playAudio(int button) {
     int arrowPressed = -1;
     switch (button) {
         case SDL_CONTROLLER_BUTTON_DPAD_UP:
-            arrowPressed = 1;
+            arrowPressed = 0;
             break;
         case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
-            arrowPressed = 2;
+            arrowPressed = 1;
             break;
         case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
-            arrowPressed = 3;
+            arrowPressed = 2;
             break;
         case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
-            arrowPressed = 4;
+            arrowPressed = 3;
             break;
         default:
             return;
