@@ -1,55 +1,30 @@
-\documentclass[12pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-\usepackage{titling}
-\usepackage{geometry}
+\documentclass[12pt,a4paper]{article}
 
-% Marges
-\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
-
-% En-tête et pied de page
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhead{}
-\renewcommand{\headrulewidth}{0pt}
-\rfoot{\thepage}
+\input{preambule.tex}
 
 \begin{document}
+\PageDeGarde
+{components/RPi4.jpg} % image sur la page de garde
+{Robot suiveur de ligne} % titre principal
+{Projet d'électronique pour systèmes embarqués} % sous-titre
+{
 
-\begin{titlepage}
-    \centering
-    
-    % Logo de l'école
-    \includegraphics[width=0.2\textwidth]{images/logo-insa.png}\par\vspace{1cm}
-    
-    % Titre
-    {\LARGE\bfseries Robot suiveur de ligne\par}
-    
-    % Sous-titre
-    {\Large Projet d'électronique pour systèmes embarqués\par}
-    
-    \vspace{2cm}
-    
-    % Noms des étudiants
-    \vfill
-    \begin{flushleft}
-        \textbf{Thomas Bauer}\\
-        \textbf{Angelo Bou-tanous}\\
-        \textbf{Ali Hamdani}\\
-        \textbf{Nathan Legendre}
-    \end{flushleft}
-        \vfill
-    \begin{flushright}
-        % Année universitaire
-        \textbf{2023/2024}
-    \end{flushright}
-    
-\end{titlepage}
+Thomas \textsc{Bauer}\\
+Angelo \textsc{Boutanous}\\
+Ali \textsc{Hamdani}\\
+Nathan \textsc{Legendre}\\
 
-% Saut de page
+} % nom
+{Electronique - ITI - 2023-2024} % bas de page
+
+\Page{INSALogo}{rien.png} % logo de bas de page (en bas a droite)
+
 \newpage
 
-% Page dédiée à l'introduction
+\tableofcontents
+
+\newpage
+
 \section*{Introduction}
 \input{introduction.tex}
 
