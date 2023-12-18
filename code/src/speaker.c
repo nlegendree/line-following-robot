@@ -29,10 +29,14 @@ void playAudio(SDL_Event event, char argv0[]) {
                 break;
         }
         if (audioIndex != -1){
+            digitalWrite(PIN_SPEAKER, HIGH);
+
             char command[200], programPath[100];
             realpath(argv0, programPath);
             sprintf(command, "mpg123 %s/../audio/%s &", dirname(programPath), audios[audioIndex]);  // mpg123 permet de lire fichier mp3 -> sprintf permet de formater une Cdc
             system(command); // permet de lancer l'execution d'une commande
+
+            digitalWrite(PIN_SPEAKER, LOW);
         }
     }
 }
