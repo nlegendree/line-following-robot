@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 #define LF_SPEED 			(int)(MAX_TRIGGER/1)
-#define LF_SPEED_ROTATION 	(int)(LF_SPEED/1)
+#define LF_SPEED_ROTATION 	(int)(LF_SPEED/1.4)
 
 void initSuiveurLigne();
 bool detecterLigne(int pin_linefinder);
