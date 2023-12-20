@@ -28,23 +28,9 @@ void LF_forward() {
 }
 
 void LF_turnLeft() {
-    digitalWrite(PIN_M1A,LOW);
-    digitalWrite(PIN_M2A,HIGH);
-    digitalWrite(PIN_M1B,HIGH);
-    digitalWrite(PIN_M2B,LOW);
-    
-    float coeffSpeed = (float)LF_SPEED/MAX_TRIGGER;
-    pwmWrite(PIN_EN1,(int)round(coeffSpeed*PWM_RANGE));
-    pwmWrite(PIN_EN2,(int)round(coeffSpeed*PWM_RANGE));
+    forward(LF_SPEED_ROTATION,MIN_AXIS);
 }
 
 void LF_turnRight() {
-    digitalWrite(PIN_M1A,HIGH);
-    digitalWrite(PIN_M2A,LOW);
-    digitalWrite(PIN_M1B,LOW);
-    digitalWrite(PIN_M2B,HIGH);
-    
-    float coeffSpeed = (float)LF_SPEED/MAX_TRIGGER;
-    pwmWrite(PIN_EN1,(int)round(coeffSpeed*PWM_RANGE));
-    pwmWrite(PIN_EN2,(int)round(coeffSpeed*PWM_RANGE));
+    forward(LF_SPEED_ROTATION,MAX_AXIS);
 }
