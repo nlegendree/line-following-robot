@@ -127,9 +127,7 @@ int main(int argc, char* argv[]) {
     lcd = initLCD();
 
     // Controller Initialization
-    controllerConnected = 0;
     SDL_GameController *controller = initController();
-    controllerConnected = 1;
 
     // Motors Initialization
     initMotors();
@@ -150,6 +148,7 @@ int main(int argc, char* argv[]) {
     // Boucle principale
     SDL_Event event;
     exitSDL = 0;
+    controllerConnected = 0;
     mode = MODE_MANUAL;
     nearObstacle = 0;
     motorState = FORWARD;
@@ -157,13 +156,11 @@ int main(int argc, char* argv[]) {
         SDL_PollEvent(&event);
         if (event.type == SDL_QUIT)
             exitSDL = 1;
-        if (event.type == SDL_CONTROLLERDEVICEADDED && !controllerConnected) {
-            printf("connect");
+        if (event.cdevice.type == SDL_CONTROLLERDEVICEADDED && !controllerConnected) {
             controller = SDL_GameControllerOpen(0);
             controllerConnected = 1;
         }
-        if (event.type == SDL_CONTROLLERDEVICEREMOVED && controllerConnected) {
-            printf("disconnect");
+        if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED && controllerConnected) {
             SDL_GameControllerClose(controller);
             stopMotors();
             mode = MODE_MANUAL;

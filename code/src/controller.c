@@ -6,8 +6,7 @@
 
 SDL_GameController* initController() {
     SDL_Init(SDL_INIT_GAMECONTROLLER);
-    while (SDL_NumJoysticks() < 1) {}
-    return SDL_GameControllerOpen(0);
+    return NULL;
 }
 
 bool buttonIsPressed(int BUTTON, SDL_Event event) {
