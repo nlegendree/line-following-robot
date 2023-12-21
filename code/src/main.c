@@ -127,7 +127,9 @@ int main(int argc, char* argv[]) {
     lcd = initLCD();
 
     // Controller Initialization
+    controllerConnected = 0;
     SDL_GameController *controller = initController();
+    controllerConnected = 1;
 
     // Motors Initialization
     initMotors();
@@ -148,7 +150,6 @@ int main(int argc, char* argv[]) {
     // Boucle principale
     SDL_Event event;
     exitSDL = 0;
-    controllerConnected = 1;
     mode = MODE_MANUAL;
     nearObstacle = 0;
     motorState = FORWARD;
