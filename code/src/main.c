@@ -148,7 +148,7 @@ int main(int argc, char* argv[]) {
     // Boucle principale
     SDL_Event event;
     exitSDL = 0;
-    controllerConnected = 0;
+    controllerConnected = 1;
     mode = MODE_MANUAL;
     nearObstacle = 0;
     motorState = FORWARD;
