@@ -156,18 +156,18 @@ int main(int argc, char* argv[]) {
         SDL_PollEvent(&event);
         if (event.type == SDL_QUIT)
             exitSDL = 1;
-        else if (event.cdevice.type == SDL_CONTROLLERDEVICEADDED && !controllerConnected) {
+        if (event.type == SDL_CONTROLLERDEVICEADDED && !controllerConnected) {
             controller = SDL_GameControllerOpen(0);
             controllerConnected = 1;
         }
-        else if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED && controllerConnected) {
+        if (event.type == SDL_CONTROLLERDEVICEREMOVED && controllerConnected) {
             SDL_GameControllerClose(controller);
             stopMotors();
             mode = MODE_MANUAL;
             buzzerOff();
             controllerConnected = 0;
         }
-        else if (controllerConnected) {
+        if (controllerConnected) {
             if (buttonIsBeingPressed(controller,SDL_CONTROLLER_BUTTON_A)) // Press CROSS to enter Line-Finder Mode
                 mode = MODE_LINEFINDER;
             else if (buttonIsBeingPressed(controller,SDL_CONTROLLER_BUTTON_B)) { // Press CIRCLE to leave Line-Finder Mode
