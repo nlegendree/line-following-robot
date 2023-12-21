@@ -162,6 +162,7 @@ int main(int argc, char* argv[]) {
             controllerConnected = 1;
         }
         if (event.type == SDL_CONTROLLERDEVICEREMOVED && controllerConnected) {
+            printf("disconnect");
             SDL_GameControllerClose(controller);
             stopMotors();
             mode = MODE_MANUAL;
