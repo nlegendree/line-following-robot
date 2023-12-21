@@ -5,7 +5,6 @@
 #include "motors.h"
 #include "buzzer.h"
 #include "distance.h"
-#include "speaker.h"
 
 #include <SDL2/SDL.h>
 #include <wiringPi.h>
