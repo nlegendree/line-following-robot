@@ -157,6 +157,7 @@ int main(int argc, char* argv[]) {
         if (event.type == SDL_QUIT)
             exitSDL = 1;
         if (event.type == SDL_CONTROLLERDEVICEADDED && !controllerConnected) {
+            printf("connect");
             controller = SDL_GameControllerOpen(0);
             controllerConnected = 1;
         }
