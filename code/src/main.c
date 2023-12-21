@@ -160,11 +160,11 @@ int main(int argc, char* argv[]) {
         SDL_PollEvent(&event);
         if (event.type == SDL_QUIT)
             exitSDL = 1;
-        else if (event.cdevice.type == SDL_CONTROLLERDEVICEADDED) {
+        else if (event.cdevice.type == SDL_CONTROLLERDEVICEADDED && !controllerConnected) {
             controller = SDL_GameControllerOpen(0);
             controllerConnected = 1;
         }
-        else if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
+        else if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED && controllerConnected) {
             SDL_GameControllerClose(controller);
             stopMotors();
             mode = MODE_MANUAL;
