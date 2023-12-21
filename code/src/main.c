@@ -137,9 +137,6 @@ int main(int argc, char* argv[]) {
     
     // Line-Finder Initialization
     initDistanceSensor();
-    
-    // Speaker Initialization
-    initSpeaker();
 
     // Buzzer Initialization
     initBuzzer();
@@ -183,8 +180,6 @@ int main(int argc, char* argv[]) {
                 lineFinder(lcd);
             else if (mode == MODE_MANUAL)
                 manualControl(lcd,controller);
-
-            playAudio(event,argv[0]);
         }
     }
 
