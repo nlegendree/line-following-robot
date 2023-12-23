@@ -9,18 +9,18 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void initSuiveurLigne() {
-    pinMode(PIN_SUIVEUR_GAUCHE, INPUT);
-    pinMode(PIN_SUIVEUR_CENTRE, INPUT);
-    pinMode(PIN_SUIVEUR_DROIT, INPUT);
+void initLineFinder() {
+    pinMode(PIN_LINEFINDER_LEFT, INPUT);
+    pinMode(PIN_LINEFINDER_CENTER, INPUT);
+    pinMode(PIN_LINEFINDER_RIGHT, INPUT);
 }
 
-bool detecterLigne(int pin_capteur) {
+bool detectLine(int pin_capteur) {
     return digitalRead(pin_capteur);
 }
 
-bool detecterIntersection(bool gauche, bool centre, bool droite){
-    return ((gauche && centre && droite) || (gauche && droite) || (gauche && centre) || (centre && droite));
+bool detectIntersection(bool left, bool center, bool right){
+    return ((left && center && right) || (left && right) || (left && center) || (center && right));
 }
 
 void LF_forward() {

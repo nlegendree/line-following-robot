@@ -7,9 +7,9 @@
 #define LF_SPEED 			(int)(MAX_TRIGGER/1.3)
 #define LF_SPEED_ROTATION 	(int)(LF_SPEED/1)
 
-void initSuiveurLigne();
-bool detecterLigne(int pin_linefinder);
-bool detecterIntersection(bool gauche, bool centre, bool droite);
+void initLineFinder();
+bool detectLine(int pin_linefinder);
+bool detectIntersection(bool gauche, bool centre, bool droite);
 void lineFinder();
 void LF_forward();
 void LF_turnLeft();

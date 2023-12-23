@@ -68,17 +68,17 @@ PI_THREAD(lcdPrintAndGetDistance) {
 }
 
 void lineFinder(int lcd){
-    bool gauche = detecterLigne(PIN_SUIVEUR_GAUCHE);
-    bool centre = detecterLigne(PIN_SUIVEUR_CENTRE);
-    bool droite = detecterLigne(PIN_SUIVEUR_DROIT);
-    printf("%d %d %d\n",gauche,centre,droite);
+    bool left = detectLine(PIN_LINEFINDER_LEFT);
+    bool center = detectLine(PIN_LINEFINDER_CENTER);
+    bool right = detectLine(PIN_LINEFINDER_RIGHT);
+    printf("%d %d %d\n",left,center,right);
     
     if (nearObstacle) {
         stopMotors();
         buzzerOn();
     }
     else {
-        if (!gauche && !centre && !droite) {
+        if (!left && !center && !right) {
             switch(motorState) {
                 case FORWARD:
                     LF_forward();
@@ -91,15 +91,15 @@ void lineFinder(int lcd){
                     break;
             }
         }
-        else if (detecterIntersection(gauche,centre,droite) || centre) {
+        else if (detectIntersection(left,center,right) || center) {
             LF_forward();
             motorState = FORWARD;
         }
-        else if (gauche) {
+        else if (left) {
             LF_turnLeft();
             motorState = TURN_LEFT;
         }
-        else if (droite) {
+        else if (right) {
             LF_turnRight();
             motorState = TURN_RIGHT;
         }
@@ -133,7 +133,7 @@ int main(int argc, char* argv[]) {
     initMotors();
 
     // Line-Finder Initialization
-    initSuiveurLigne();
+    initLineFinder();
     
     // Line-Finder Initialization
     initDistanceSensor();
@@ -145,7 +145,7 @@ int main(int argc, char* argv[]) {
     // LCD and Distance Sensor Thread Creation
     piThreadCreate(lcdPrintAndGetDistance);
 
-    // Boucle principale
+    // Main loop
     SDL_Event event;
     exitSDL = 0;
     controllerConnected = 0;
