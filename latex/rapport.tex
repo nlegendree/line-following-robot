@@ -1,6 +1,28 @@
 \documentclass[12pt,a4paper]{article}
 
-\input{preambule.tex}
+%Importation des packages
+\usepackage{latex/classeRapport}
+\usepackage{pdfpages}
+\usepackage{listingsutf8}
+\usepackage{lscape}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{graphicx}
+
+\graphicspath{{latex/images/}}
+
+\setlength{\headheight}{14.7pt}
+
+\lstset{
+	extendedchars=true,
+	breaklines=true,
+	numbers=left,
+	language=C,
+	frame=single,
+	extendedchars=\true,
+	inputencoding=utf8,
+}
 
 \begin{document}
 \PageDeGarde
@@ -26,28 +48,28 @@ Nathan \textsc{Legendre}\\
 \newpage
 
 \section*{Introduction}
-\input{introduction.tex}
+\input{latex/introduction.tex}
 
 \section{Répartition du travail}
-\input{members_tasks.tex}
+\input{latex/members_tasks.tex}
 
 \section{Circuit électronique (Fritzing)}
-\input{fritzing.tex}
+\input{latex/fritzing.tex}
 
 \section{Explication des choix techniques}
-\input{explanations_choices.tex}
+\input{latex/explanations_choices.tex}
 
 \section{Explication du rôle des composants}
-\input{explanations_components.tex}
+\input{latex/explanations_components.tex}
 
 \section{Code}
-\input{code.tex}
+\input{latex/code.tex}
 
 \section{Difficultés rencontrées}
-\input{difficulties.tex}
+\input{latex/difficulties.tex}
 
 \section{Conclusion}
-\input{conclusion.tex}
+\input{latex/conclusion.tex}
 
 \listoffigures
 

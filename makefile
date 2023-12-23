@@ -19,10 +19,12 @@ $(SRCDIR)/%.o : $(SRCDIR)/%.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 pdf :
-	cd $(LATEXDIR); pdflatex rapport.tex
-	rm -f ./$(LATEXDIR)/*.fls ./$(LATEXDIR)/*.fdb_latexmk ./$(LATEXDIR)/*.aux ./$(LATEXDIR)/*.log
+	pdflatex -interaction=stopmode --shell-escape ./$(LATEXDIR)/rapport.tex
+	rm -f ./*.fls ./*.fdb_latexmk ./*.aux ./*.log ./*.lof ./*.out ./*.synctex.gz ./*.toc
+	rm -rf ./_minted-rapport
 
 clean :
-	rm -f $(BINDIR)/$(EXEC)
-	rm -f $(SRCDIR)/*.o
-	rm -f $(LATEXDIR)/*.pdf $(LATEXDIR)/*.fls $(LATEXDIR)/*.fdb_latexmk $(LATEXDIR)/*.aux $(LATEXDIR)/*.log
+	rm -f ./$(BINDIR)/$(EXEC)
+	rm -f ./$(SRCDIR)/*.o
+	rm -f ./*.pdf ./*.fls ./*.fdb_latexmk ./*.aux ./*.log ./*.lof ./*.out ./*.synctex.gz ./*.toc
+	rm -rf ./_minted-rapport
