@@ -4,7 +4,13 @@ Durant notre projet nous avons rencontré certaines difficultés.
 La première a été la conception des codes moteurs, le premier composant que nous avions utilisés le MAKERDRIVE était difficile à manipuler et nous n'arrivions pas a envoyé des signaux PWM de valeurs différents. Problème qui n'était pas présent avec le L293D.
 
 \subsection{Modélisation 3D}
-La deuxième difficulté a été la réalisation de notre modèle 3D, nous devions pour celui-ci prévoir à l'avance tous les trous pour le fixer et faire passer les fils tout en gardant un résultat esthétique. De plus la limite temps imposé par l'impression 3D nous a poussé à trouver le bon compromis entre un résultat compacte, esthétique et qui nous permette d'y disposer tous les composants.
+La deuxième difficulté majeure rencontrée lors de la réalisation de notre modèle 3D a été liée aux contraintes spécifiques du fichier .stl que nous avons choisi pour l'impression. Le recours à un fichier maillé comportant plus de 50 000 facettes a rendu l'utilisation de la fonction 'Coque' (qui permet de créer une enveloppe solide autour d'un modèle plein) de SolidWorks impossible. Face à ce défi, nous avons dû entreprendre manuellement le processus de "creusement" en effectuant des enlèvements de matière, une tâche complexe et minutieuse.
+
+En raison du nombre élevé de facettes, le logiciel s'est révélé extrêmement lent, nécessitant plusieurs minutes pour appliquer des fonctions telles que l'enlèvement de matière ou l'extrudage. Cette contrainte a ajouté une complexité significative à la modélisation, exigeant une attention particulière à chaque étape du processus pour garantir la précision et l'intégrité du modèle.
+
+Une autre difficulté notable a émergé lors de la phase d'impression 3D. En raison du temps d'impression trop élevé dû aux supports nécessaires, nous avons été contraints de découper le modèle en trois parties distinctes. Cette démarche visait à optimiser l'utilisation des supports afin de diminuer le temps d'impression, tout en conservant l'esthétique du modèle final.
+
+Par ailleurs, la réalisation du modèle 3D a exigé une anticipation minutieuse de l'emplacement des trous pour la fixation et le passage des fils, nous obligeant à trouver le juste équilibre entre compacité, esthétique et disposition efficace de tous les composants.
 
 \subsection{Taille de notre robot}
 La troisième difficulté est lié à la seconde, la limite de temps d'impression et le modèle 3D compact nous a poussé à devoir optimiser l'espace occupé par les composants, en utilisant des câbles femelle-femelle, ressoudant les branches de l'I2C, raccourcir nos cables etc.
