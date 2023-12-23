@@ -21,9 +21,11 @@
 #define TURN_LEFT       1
 #define TURN_RIGHT      2
 
+// Global variables used to communicate between processes
 int lcd, mode, motorState, R2, L2, LX;
 bool controllerConnected, nearObstacle, exitSDL;
 
+// LCD display and distance acquisition process
 PI_THREAD(lcdPrintAndGetDistance) {
     while (!exitSDL) {
         lcdClear(lcd);
@@ -67,6 +69,7 @@ PI_THREAD(lcdPrintAndGetDistance) {
     return 0;
 }
 
+// Direction selection function in line-finding mode  
 void lineFinder(int lcd){
     bool left = detectLine(PIN_LINEFINDER_LEFT);
     bool center = detectLine(PIN_LINEFINDER_CENTER);
@@ -107,6 +110,7 @@ void lineFinder(int lcd){
     }
 }
 
+// Robot control function in manual-control mode
 void manualControl(int lcd, SDL_GameController *controller) {
     R2 = triggerValue(controller,SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
     L2 = triggerValue(controller,SDL_CONTROLLER_AXIS_TRIGGERLEFT);
@@ -119,6 +123,7 @@ void manualControl(int lcd, SDL_GameController *controller) {
     }
 }
 
+// Main function
 int main(int argc, char* argv[]) {
     // WiringPi Initialization
     wiringPiSetupGpio();

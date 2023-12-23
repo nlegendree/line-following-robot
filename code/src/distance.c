@@ -4,11 +4,14 @@
 #include "distance.h"
 #include "gpioPins.h"
 
+
+// Distance sensor initialization
 void initDistanceSensor() {
     pinMode(PIN_TRIG, OUTPUT);
     pinMode(PIN_ECHO, INPUT);
 }
 
+// Function to acquire the distance through the ultrasonic sensor
 int getDistance() {
 	struct timeval tv1;  
 	struct timeval tv2;  

@@ -5,7 +5,7 @@
 #include <math.h>
 #include <wiringPi.h>
 
-// Initialisation de la bibliothèque WiringPi
+// Motors initialization
 void initMotors() {
     pinMode(PIN_M1A,OUTPUT);
     pinMode(PIN_M1B,OUTPUT);
@@ -19,7 +19,7 @@ void initMotors() {
     pwmSetRange(PWM_RANGE);   // Réglage de la plage PWM (0-1024)
 }
 
-// Fonction pour faire avancer le moteur
+// Function to make the robot move forward with a specified speed and steering angle
 void forward(int speed, int angle) {
     digitalWrite(PIN_M1A,HIGH);
     digitalWrite(PIN_M2A,HIGH);
@@ -39,7 +39,7 @@ void forward(int speed, int angle) {
     }
 }
 
-// Fonction pour faire reculer le moteur
+// Function to make the robot move backward with a specified speed and steering angle
 void backward(int speed, int angle) {
     digitalWrite(PIN_M1A,LOW);
     digitalWrite(PIN_M2A,LOW);
@@ -59,7 +59,7 @@ void backward(int speed, int angle) {
     }
 }
 
-// Fonction pour arrêter le moteur
+// Function to stop the motors
 void stopMotors() {
     pwmWrite(PIN_EN1,0);
     pwmWrite(PIN_EN2,0);
