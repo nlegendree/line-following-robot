@@ -19,7 +19,7 @@ $(SRCDIR)/%.o : $(SRCDIR)/%.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 pdf :
-	pdflatex -interaction=stopmode --shell-escape ./$(LATEXDIR)/rapport.tex
+	pdflatex --shell-escape ./$(LATEXDIR)/rapport.tex
 	rm -f ./*.fls ./*.fdb_latexmk ./*.aux ./*.log ./*.lof ./*.out ./*.synctex.gz ./*.toc
 	rm -rf ./_minted-rapport
 
