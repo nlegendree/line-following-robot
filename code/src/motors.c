@@ -15,8 +15,8 @@ void initMotors() {
     pinMode(PIN_EN2,PWM_OUTPUT);
 
     pwmSetMode(PWM_MODE_MS);
-    pwmSetClock(PWM_CLOCK);    // Réglage de la fréquence PWM
-    pwmSetRange(PWM_RANGE);   // Réglage de la plage PWM (0-1024)
+    pwmSetClock(PWM_CLOCK);
+    pwmSetRange(PWM_RANGE);
 }
 
 // Function to make the robot move forward with a specified speed and steering angle
