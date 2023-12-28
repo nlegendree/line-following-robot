@@ -3,8 +3,20 @@ Lors de la réalisation de notre projet, nous avons rencontré quelques difficul
 \subsection{Gestion des moteurs}
 La première a été la conception des codes moteurs, le premier composant que nous avions utilisés le MAKERDRIVE était difficile à manipuler et nous n'arrivions pas a envoyé des signaux PWM de valeurs différents. Problème qui n'était pas présent avec le L293D.
 
+\subsection{Fonctionnement du Code}
+Durant la phase de développement nous avons rencontrés certains problèmes, le 1er était une latence entre l'action réalisée sur la manette et la réaction du robot, rendant très difficile sa maniabilité ainsi que certaines manoeuvres.
+
+Nous avons alors entâmer des recherches pour trouver une solution à ce problème. Après plusieures tentatives qui n'aboutissaient pas, la solution était plutôt simple. Pour un signal PWM nous avons une clock qui met à jour le signal PWM à chaque période de temps définit par la clock, cette latence ne venait donc ni de la manette ni de la Raspeberry Pi mais bien de la clock PWM, et en la diminuant nous avons réussi à obtenir une maniabilité très bonne avec un réponse presque instantanée du robot.
+
+Autre problème rencontré durant notre phase de développement, a été le fonctionnement du mode suivi de ligne.
+
+Pour celui-ci nous avions tester le fonctionnement en dehors du circuit final et il fonctionnait correctement, notre table de vérité était correcte mais sur le circuit notre robot effectuait des sortes de zig-zags sur les lignes droites et avait certains problèmes sur les virages. Après avoir revu notre code et notre table de vérité plusieurs fois et nous avons conclus que le problème ne venait pas d'ici. Nous avons alors observé le comportement du robot sur le circuit et avons remarqué que la vitesse du robot comparé à la taille du circuit impactait le fonctionnement de nos line-finders.
+
+Nous avons alors réduit la vitesse globale en mode suivi de ligne jusqu'à trouver le parfait compromis entre vitesse et réalisation du circuit.
+
+
 \subsection{Modélisation 3D}
-La deuxième difficulté majeure rencontrée lors de la réalisation de notre modèle 3D a été liée aux contraintes spécifiques du fichier .stl que nous avons choisi pour l'impression. Le recours à un fichier maillé comportant plus de 50 000 facettes a rendu l'utilisation de la fonction 'Coque' (qui permet de créer une enveloppe solide autour d'un modèle plein) de SolidWorks impossible. Face à ce défi, nous avons dû entreprendre manuellement le processus de "creusement" en effectuant des enlèvements de matière, une tâche complexe et minutieuse.
+La troisième difficulté majeure rencontrée lors de la réalisation de notre modèle 3D a été liée aux contraintes spécifiques du fichier .stl que nous avons choisi pour l'impression. Le recours à un fichier maillé comportant plus de 50 000 facettes a rendu l'utilisation de la fonction 'Coque' (qui permet de créer une enveloppe solide autour d'un modèle plein) de SolidWorks impossible. Face à ce défi, nous avons dû entreprendre manuellement le processus de "creusement" en effectuant des enlèvements de matière, une tâche complexe et minutieuse.
 
 En raison du nombre élevé de facettes, le logiciel s'est révélé extrêmement lent, nécessitant plusieurs minutes pour appliquer des fonctions telles que l'enlèvement de matière ou l'extrudage. Cette contrainte a ajouté une complexité significative à la modélisation, exigeant une attention particulière à chaque étape du processus pour garantir la précision et l'intégrité du modèle.
 
@@ -13,8 +25,15 @@ Une autre difficulté notable a émergé lors de la phase d'impression 3D. En ra
 Par ailleurs, la réalisation du modèle 3D a exigé une anticipation minutieuse de l'emplacement des trous pour la fixation et le passage des fils, nous obligeant à trouver le juste équilibre entre compacité, esthétique et disposition efficace de tous les composants.
 
 \subsection{Taille de notre robot}
-La troisième difficulté est lié à la seconde, la limite de temps d'impression et le modèle 3D compact nous a poussé à devoir optimiser l'espace occupé par les composants, en utilisant des câbles femelle-femelle, ressoudant les branches de l'I2C, raccourcir nos cables etc.
+La quatrième difficulté est lié à la troisième, la limite de temps d'impression et le modèle 3D compact nous a poussé à devoir optimiser l'espace occupé par les composants, en utilisant des câbles femelle-femelle, ressoudant les branches de l'I2C, raccourcir nos cables etc.
+
+\subsection{Isolation des composants}
+Après le montage de notre robot, nous avons entamé la phase des tests finaux.
+
+Certains tests qui pourtant réussissait avant le montage ne réussissait plus. Nous avons alors décidé de démonter le robot afin de trouver la raison à ces disfonctionnements. C'est alors là que nous avons remarqué qu'il y avait certains faux-contacts et courts-circuits dû à la proximité de nos composants, affectant donc leur bon fonctionnement. Pour y remédier nous avons isoler chaque composant un à un et vérifier si tout était à nouveau fonctionnel.
 
 Pour finir nous avons trouver une solution à chacun de nos problèmes grâce aux idées de chacun et des conseils des encadrants de TP, ce qui nous a permis d'arriver à un résultat convenable et fonctionnel.
+
+
 
 \newpage
