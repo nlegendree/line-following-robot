@@ -1,7 +1,7 @@
 Pour répondre aux cahier des charges évoqué en introduction, nous avons choisi différents composants, voire plusieurs fois les mêmes. Nous allons expliciter nos choix dans la section ci-dessous :
 
 \subsection{Raspberry Pi}
-La Raspberry Pi a été cruciale dans notre projet en tant que cerveau central du robot. Elle a pris en charge la gestion des capteurs, la logique de contrôle, et les interactions avec les composants matériels. Grâce à sa connectivité GPIO, elle a permis une intégration facile avec les capteurs de suivi de ligne, les capteurs de distance, et d'autres périphériques. De plus, la possibilité de programmer en langage C a facilité le développement du logiciel embarqué car nous suivons en parallèle un cours sur ce même language.
+La Raspberry Pi a été cruciale dans notre projet en tant que cerveau central du robot. Elle a pris en charge la gestion des capteurs, la logique de contrôle, et les interactions avec les composants matériels. Grâce à sa connectivité GPIO, elle a permis une intégration facile avec les capteurs de suivi de ligne, les capteurs de distance, et d'autres périphériques. De plus, la possibilité de programmer en langage C a facilité le développement du logiciel embarqué car nous suivions en parallèle un cours sur ce même language.
 
 \begin{figure}[h]
     \centering
@@ -15,9 +15,9 @@ Les capteurs infrarouge, tels que le modèle TCRT5000 que nous avons choisi, jou
 
 En effet, dans notre cas, nous avons utilisé trois suiveurs de ligne : un à gauche, un central et un à droite. Cela permet de couvrir toute la zone nécessaire pour suivre la ligne, détecter les intersections et tourner efficacement.
 
-Dans un premier temps, il faut savoir que nous avons travaillé avec un autre type de capteur infrarouge type "LineFinder". Cela n'a eu aucune conséquence sur la suite du projet car leur fonctionnement est quasiment identique aux capteurs finaux.
+Dans un premier temps, il faut savoir que nous avons travaillé avec un autre type de capteur infrarouge "LineFinder" plus compact mais moins performant. Cela n'a eu aucune conséquence sur la suite du projet car leur fonctionnement est quasiment identique aux capteurs finaux.
 
-Le choix du capteur infrarouge s'aligne parfaitement avec les exigences du cahier des charges initial. La facilité d'intégration avec le Raspberry Pi, combinée à leur réactivité, offre une solution fiable pour le suivi de ligne, permettant au robot de naviguer de manière fluide tout en respectant les intersections définies dans le cahier des charges.
+Le choix du capteur infrarouge s'aligne parfaitement avec les exigences du cahier des charges initial. Leur facilité d'intégration avec le Raspberry Pi, combinée à leur réactivité, offre une solution fiable pour le suivi de ligne, permettant au robot de naviguer de manière fluide tout en respectant les intersections définies dans le cahier des charges.
 
 \begin{figure}[h]
     \centering
@@ -65,9 +65,7 @@ L'Active Buzzer, le composant d'alerte d'obstacle est essentiel pour notre robot
 \end{figure}
 
 \subsection{LCD1602 et I2C Interface Module}
-L'écran LCD1602, contrôlé via l'interface I2C, représente un élément central dans notre robot suiveur de ligne en fournissant une interface visuelle pour afficher des informations cruciales conformes aux spécifications du cahier des charges initial. Sa capacité à présenter en temps réel les mouvements programmés du robot, les distances mesurées par les capteurs, ainsi que l'état de connexion de la manette, offre une visibilité immédiate sur le statut opérationnel du robot.
-
-L'utilisation de l'I2C simplifie la connectivité entre l'écran LCD et le Raspberry Pi, permettant une intégration aisée dans notre système embarqué.
+L'écran LCD1602, contrôlé via l'interface I2C, représente un élément central dans notre robot suiveur de ligne en fournissant une interface visuelle pour afficher des informations cruciales conformes aux spécifications du cahier des charges initial. Sa capacité à présenter en temps réel les mouvements programmés du robot, les distances mesurées par les capteurs, ainsi que l'état de connexion de la manette, offre une visibilité immédiate sur le statut opérationnel du robot. L'utilisation de l'I2C simplifie la connectivité entre l'écran LCD et le Raspberry Pi, permettant une intégration aisée dans notre système embarqué.
 
 \begin{comment}
 \begin{figure}[h]
@@ -81,9 +79,7 @@ L'utilisation de l'I2C simplifie la connectivité entre l'écran LCD et le Raspb
 \newpage
 
 \subsection{Manette de PS5}
-La manette de PS5 connectée en Bluetooth, avec sa configuration ergonomique et ses fonctionnalités avancées, offre une expérience de contrôle fluide et réactive. Les opérateurs peuvent ainsi ajuster la trajectoire du robot, effectuer des arrêts d'urgence, et contrôler manuellement les mouvements, répondant ainsi aux critères de contrôlabilité et d'interactivité définis dans le cahier des charges. En choisissant cette approche, notre robot suiveur de ligne intègre une solution de commande manuelle moderne et accessible, alignée sur les attentes spécifiées dès le début de notre projet.
-
-À noter que nous avons utilisé une manette de PS5 mais nous aurions pu utiliser quasiment n'importe quelle manette similaire. (Ceci a été détaillé plus haut dans la section 4.)
+La manette de PS5 connectée en Bluetooth, avec sa configuration ergonomique et ses fonctionnalités avancées, offre une expérience de contrôle fluide et réactive. Les opérateurs peuvent ainsi ajuster la trajectoire du robot, effectuer des arrêts d'urgence, et contrôler manuellement les mouvements, répondant ainsi aux critères de contrôlabilité et d'interactivité définis dans le cahier des charges. En choisissant cette approche, notre robot suiveur de ligne intègre une solution de commande manuelle moderne et accessible, alignée sur les attentes spécifiées dès le début de notre projet. À noter que nous avons utilisé une manette de PS5 mais nous aurions pu utiliser quasiment n'importe quelle manette similaire. (Ceci a été détaillé plus haut dans la section 4.)
 
 \begin{comment}
 \begin{figure}[h]

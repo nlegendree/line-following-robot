@@ -1,14 +1,14 @@
-Lors de la réalisation de notre projet, nous avons rencontré quelques difficultés qui nous ont ralenties mais sans jamais nous arrêter.
+Pendant notre projet, nous avons fait face à des défis, mais grâce à notre collaboration, nous avons réussi à les surmonter avec succès.
 
 \subsection{Gestion des moteurs}
-La première a été la conception des codes moteurs. En effet, le premier composant que nous avons utilisé, le MAKERDRIVE, était difficile à manipuler et nous n'arrivions pas a envoyé des signaux PWM de valeurs différentes. Problème qui n'était pas présent avec le L293D sur lequel nous avons continué le projet.
+La première a été la conception des codes moteurs. En effet, le premier composant que nous avons utilisé, le MAKERDRIVE, était difficile à manipuler et nous n'arrivions pas a envoyer des signaux PWM de valeurs différentes. Problème qui n'était pas présent avec le L293D sur lequel nous avons continué le projet.
 
 \subsection{Fonctionnement du Code}
 Durant la phase de développement nous avons rencontré certains problèmes.
 
 L'un des problèmes était une latence entre l'action réalisée sur la manette et la réaction du robot, rendant très difficile sa maniabilité ainsi que certaines manoeuvres. Nous avons alors entâmé des recherches pour trouver une solution à ce problème. Après plusieures tentatives qui n'aboutissaient pas, la solution était plutôt simple. Pour un signal PWM nous avons une clock qui met à jour le signal PWM à chaque période de temps définit par la clock, cette latence ne venait donc ni de la manette ni de la Raspeberry Pi mais bien de la clock PWM, et en la diminuant nous avons réussi à obtenir une maniabilité très bonne avec un réponse presque instantanée du robot.
 
-Un autre problème rencontré pendant notre phase de développement, a été le fonctionnement du mode suivi de ligne. Pour celui-ci nous avions tester le fonctionnement en dehors du circuit final et il fonctionnait correctement, notre table de vérité était correcte mais sur le circuit notre robot effectuait des sortes de zig-zags sur les lignes droites et avait certains problèmes sur les virages. Après avoir revu notre code et notre table de vérité plusieurs fois, nous en avons conclu que le problème ne venait pas d'ici. Nous avons alors observé le comportement du robot sur le circuit et avons remarqué que la vitesse du robot comparée à la taille du circuit impactait le fonctionnement de nos suiveurs de ligne. Nous avons alors réduit la vitesse globale en mode suivi de ligne jusqu'à trouver le parfait compromis entre vitesse et réalisation du circuit.
+Un autre problème rencontré pendant notre phase de développement, a été le fonctionnement du mode suivi de ligne. Pour celui-ci nous avions testé le fonctionnement en dehors du circuit final et il fonctionnait correctement, notre table de vérité était correcte mais sur le circuit notre robot effectuait des sortes de zig-zags sur les lignes droites et avait certains problèmes sur les virages. Après avoir revu notre code et notre table de vérité plusieurs fois, nous en avons conclu que le problème ne venait pas d'ici. Nous avons alors observé le comportement du robot sur le circuit et avons remarqué que la vitesse du robot comparée à la taille du circuit impactait le fonctionnement de nos suiveurs de ligne. Nous avons alors réduit la vitesse globale en mode suivi de ligne jusqu'à trouver le parfait compromis entre vitesse et réalisation du circuit.
 
 
 \subsection{Modélisation 3D}
@@ -21,7 +21,7 @@ Une autre difficulté notable a émergé lors de la phase d'impression 3D. En ra
 Par ailleurs, la réalisation du modèle 3D a exigé une anticipation minutieuse de l'emplacement des trous pour la fixation et le passage des fils, nous obligeant à trouver le juste équilibre entre compacité, esthétique et disposition efficace de tous les composants.
 
 \subsection{Taille de notre robot}
-La quatrième difficulté est lié à la troisième, la limite de temps d'impression et le modèle 3D compact nous ont poussés à devoir optimiser l'espace occupé par les composants, en utilisant des câbles femelle-femelle, en ressoudant les branches de l'I2C, raccourcissant nos câbles etc.
+La quatrième difficulté est liée à la troisième, la limite de temps d'impression et le modèle 3D compact nous ont poussés à devoir optimiser l'espace occupé par les composants, en utilisant des câbles femelle-femelle, en ressoudant les branches de l'I2C, raccourcissant nos câbles etc.
 
 \subsection{Isolation des composants}
 Après le montage de notre robot, nous avons entamé la phase finale, c'est-à-dire les tests.
