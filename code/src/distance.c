@@ -1,9 +1,9 @@
-#include <wiringPi.h>
-#include <stdio.h>  
-#include <sys/time.h>
 #include "distance.h"
 #include "gpioPins.h"
 
+#include <wiringPi.h>
+#include <stdio.h>  
+#include <sys/time.h>
 
 // Distance sensor initialization
 void initDistanceSensor() {

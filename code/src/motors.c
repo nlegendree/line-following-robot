@@ -21,18 +21,19 @@ void initMotors() {
 
 // Function to make the robot move forward with a specified speed and steering angle
 void forward(int speed, int angle) {
+    // Pins setting to make motors move forward
     digitalWrite(PIN_M1A,HIGH);
     digitalWrite(PIN_M2A,HIGH);
     digitalWrite(PIN_M1B,LOW);
     digitalWrite(PIN_M2B,LOW);
     
     float coeffSpeed = (float)speed/MAX_TRIGGER;
-    if (angle <= 0) {
+    if (angle <= 0) { // If the user turns left, only the speed of the left motor depends on the angle of rotation
         float coeffAngle = (float)(MIN_AXIS-angle)/MIN_AXIS;
         pwmWrite(PIN_EN1,(int)round(coeffAngle*coeffSpeed*PWM_RANGE));
         pwmWrite(PIN_EN2,(int)round(coeffSpeed*PWM_RANGE));
     }
-    else {
+    else { // If the user turns right, only the speed of the right motor depends on the angle of rotation
         float coeffAngle = (float)(MAX_AXIS-angle)/MAX_AXIS;
         pwmWrite(PIN_EN1,(int)round(coeffSpeed*PWM_RANGE));
         pwmWrite(PIN_EN2,(int)round(coeffAngle*coeffSpeed*PWM_RANGE));
@@ -41,18 +42,19 @@ void forward(int speed, int angle) {
 
 // Function to make the robot move backward with a specified speed and steering angle
 void backward(int speed, int angle) {
+    // Pins setting to make motors move backward
     digitalWrite(PIN_M1A,LOW);
     digitalWrite(PIN_M2A,LOW);
     digitalWrite(PIN_M1B,HIGH);
     digitalWrite(PIN_M2B,HIGH);
     
     float coeffSpeed = (float)speed/MAX_TRIGGER;
-    if (angle <= 0) {
+    if (angle <= 0) { // If the user turns left, only the speed of the left motor depends on the angle of rotation
         float coeffAngle = (float)(MIN_AXIS-angle)/MIN_AXIS;
         pwmWrite(PIN_EN1,(int)round(coeffAngle*coeffSpeed*PWM_RANGE));
         pwmWrite(PIN_EN2,(int)round(coeffSpeed*PWM_RANGE));
     }
-    else {
+    else { // If the user turns right, only the speed of the right motor depends on the angle of rotation
         float coeffAngle = (float)(MAX_AXIS-angle)/MAX_AXIS;
         pwmWrite(PIN_EN1,(int)round(coeffSpeed*PWM_RANGE));
         pwmWrite(PIN_EN2,(int)round(coeffAngle*coeffSpeed*PWM_RANGE));
