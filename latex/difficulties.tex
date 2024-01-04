@@ -21,7 +21,11 @@ Une autre difficulté notable a émergé lors de la phase d'impression 3D. En ra
 Par ailleurs, la réalisation du modèle 3D a exigé une anticipation minutieuse de l'emplacement des trous pour la fixation et le passage des fils, nous obligeant à trouver le juste équilibre entre compacité, esthétique et disposition efficace de tous les composants.
 
 \subsection{Taille de notre robot}
-La quatrième difficulté est liée à la troisième, la limite de temps d'impression et le modèle 3D compact nous ont poussés à devoir optimiser l'espace occupé par les composants, en utilisant des câbles femelle-femelle, en ressoudant les branches de l'I2C, raccourcissant nos câbles etc.
+La quatrième difficulté est liée à la troisième, la limite de temps d'impression et le modèle 3D compact nous ont poussés à devoir optimiser l'espace occupé par les composants. Ce problème a été un des problèmes majeurs rencontrés durant le projet. Nous avons dû plusieurs fois revoir le montage et innover pour un résultat qui puisse tenir dans la limite d'espace offert par notre modèle 3D.
+ 
+ Parmis les solutions nous avons par exemple décidé de placer la batterie et la pile à l'extérieur du modèle, permettant par la même occasion d'améliorer la maintenabilité du robot. Nous avons également garder uniquement les circuits imprimés de nos composants, revu le choix de nos GPIO pour avoir un câblage plus organisé, utilisé des câbles femelle-femelle,ressoudé les broches de certains composants, raccourcis nos câbles etc.
+ 
+ Ces choix en ont impliqués d'autres. premièrement nous avons rajouter des écrous sur notre roue-libre pour surélever notre robot afin d'éviter le contact de la batterie et la pile avec le sol. Deuxièmement nous avons dû creuser notre modèle 3D après l'impression pour s'adapter à certains composants qui ne tenaient pas. Pour finir même le choix de nos méthodes de fixation ont dû être revues, notamment l'utilisation de scotch double-face à la place des scratchs, vis , pâte à fixe etc car moins volumineux.
 
 \subsection{Isolation des composants}
 Après le montage de notre robot, nous avons entamé la phase finale, c'est-à-dire les tests.
