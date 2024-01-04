@@ -10,5 +10,4 @@ void buzzerOn();
 // Function to turn off the buzzer
 void buzzerOff();
 
-
 #endif

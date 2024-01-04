@@ -1,11 +1,10 @@
 #ifndef __LINE_FINDER__
 #define __LINE_FINDER__
 
-
 #include <stdbool.h>
 
-#define LF_SPEED 			(int)(MAX_TRIGGER/1.3)  // Motors speed in line-finding mode
-#define LF_SPEED_ROTATION 	(int)(LF_SPEED/1)       // Motors rotation speed in line-finding mode
+#define LF_SPEED            (int)(MAX_TRIGGER / 1.3) // Motors speed in line-finding mode
+#define LF_SPEED_ROTATION   (int)(LF_SPEED / 1) // Motors rotation speed in line-finding mode
 
 // Line finder sensors initialization
 void initLineFinder();
@@ -24,6 +23,5 @@ void LF_turnLeft();
 
 // Function to make the robot turn right in line-finding mode
 void LF_turnRight();
-
 
 #endif

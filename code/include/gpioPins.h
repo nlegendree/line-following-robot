@@ -1,7 +1,6 @@
 #ifndef __GPIO_PIN__
 #define __GPIO_PIN__
 
-
 #define PIN_BUZZER              14
 
 #define PIN_LINEFINDER_LEFT     17
@@ -18,6 +17,5 @@
 #define PIN_M1B                 6
 #define PIN_M2A                 26
 #define PIN_M2B                 21
-
 
 #endif

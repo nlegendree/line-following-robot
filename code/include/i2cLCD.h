@@ -1,7 +1,6 @@
 #ifndef __I2C_LCD__
 #define __I2C_LCD__
 
-
 #define        I2C_ADDRESS  0x27
 
 #define        AF_BASE      64
@@ -17,6 +16,5 @@
 
 // LCD initialization
 int initLCD();
-
 
 #endif

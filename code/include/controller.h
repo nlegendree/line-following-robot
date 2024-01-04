@@ -1,7 +1,6 @@
 #ifndef __CONTROLLER__
 #define __CONTROLLER__
 
-
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 
@@ -28,7 +27,6 @@ int triggerValue(SDL_GameController *controller, SDL_GameControllerAxis TRIGGER)
 
 // Function to get the value of a specific axis on the controller with a deadzone check
 int axisValue(SDL_GameController *controller, SDL_GameControllerAxis AXIS);
-
 
 #endif
 

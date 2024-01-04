@@ -1,7 +1,8 @@
 #include "buzzer.h"
-#include "gpioPins.h"
 
 #include <wiringPi.h>
+
+#include "gpioPins.h"
 
 // Buzzer initialization
 void initBuzzer() {

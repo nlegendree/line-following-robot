@@ -1,7 +1,6 @@
 #ifndef __MOTORS__
 #define __MOTORS__
 
-
 #include "controller.h"
 
 #define PWM_CLOCK 50
@@ -18,6 +17,5 @@ void backward(int speed, int angle);
 
 // Function to stop the motors
 void stopMotors();
-
 
 #endif
