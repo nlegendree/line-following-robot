@@ -1,7 +1,7 @@
-Pour répondre aux cahier des charges évoqué en introduction, nous avons choisi différents composants, voire plusieurs fois les mêmes. Nous allons expliciter nos choix dans la section ci-dessous :
+Pour répondre au cahier des charges évoqué en introduction, nous avons choisi différents composants, voire plusieurs fois les mêmes. Nous allons expliciter nos choix dans la section ci-dessous :
 
 \subsection{Raspberry Pi}
-La Raspberry Pi a été cruciale dans notre projet en tant que cerveau central du robot. Elle a pris en charge la gestion des capteurs, la logique de contrôle, et les interactions avec les composants matériels. Grâce à sa connectivité GPIO, elle a permis une intégration facile avec les capteurs de suivi de ligne, les capteurs de distance, et d'autres périphériques. De plus, la possibilité de programmer en langage C a facilité le développement du logiciel embarqué car nous suivions en parallèle un cours sur ce même language.
+La Raspberry Pi a été cruciale dans notre projet en tant que cerveau central du robot. Elle a pris en charge la gestion des capteurs, la logique de contrôle, et les interactions avec les composants matériels. Grâce à sa connectivité GPIO, elle a permis une intégration facile avec les capteurs de suivi de ligne, les capteurs de distance, et d'autres périphériques. De plus, la possibilité de programmer en langage C a facilité le développement du logiciel embarqué car nous suivions en parallèle un cours sur ce même langage.
 
 \begin{figure}[h]
     \centering
@@ -15,7 +15,7 @@ Les capteurs infrarouge, tels que le modèle TCRT5000 que nous avons choisi, jou
 
 En effet, dans notre cas, nous avons utilisé trois suiveurs de ligne : un à gauche, un central et un à droite. Cela permet de couvrir toute la zone nécessaire pour suivre la ligne, détecter les intersections et tourner efficacement.
 
-Dans un premier temps, il faut savoir que nous avons travaillé avec un autre type de capteur infrarouge "LineFinder" plus compact mais moins performant. Cela n'a eu aucune conséquence sur la suite du projet car leur fonctionnement est quasiment identique aux capteurs finaux.
+Dans un premier temps, il faut savoir que nous avons travaillé avec un autre type de capteur infrarouge suiveur de ligne plus compact mais moins performant. Cela n'a eu aucune conséquence sur la suite du projet car leur fonctionnement est quasiment similaires aux capteurs utilisés.
 
 Le choix du capteur infrarouge s'aligne parfaitement avec les exigences du cahier des charges initial. Leur facilité d'intégration avec le Raspberry Pi, combinée à leur réactivité, offre une solution fiable pour le suivi de ligne, permettant au robot de naviguer de manière fluide tout en respectant les intersections définies dans le cahier des charges.
 
