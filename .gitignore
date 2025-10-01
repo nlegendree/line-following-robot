@@ -1,0 +1,134 @@
+# C/C++ Compiled Files
+*.o
+*.obj
+*.exe
+*.out
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+
+# Executables
+bin/rc
+bin/*
+
+# Build artifacts
+*.d
+*.slo
+*.lo
+*.ko
+*.elf
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# LaTeX
+## Core latex/pdflatex auxiliary files
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+## Intermediate documents
+*.dvi
+*.xdv
+*-converted-to.*
+
+## Bibliography auxiliary files
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+## Build tool auxiliary files
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+## Build tool directories
+.texpadtmp/
+
+## Auxiliary and intermediate files from other packages
+*.lox
+*.snm
+*.vrb
+*.nav
+*.pre
+*.dpth
+*.md5
+*.auxlock
+
+## Minted (code highlighting)
+_minted-*/
+*.pyg
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.cproject
+.settings/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.cache
+
+# Backup files
+*~
+*.orig
+*.backup
+
+# Python (if any scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# Project specific
+# Uncomment if you don't want to track the compiled binary
+# bin/rc
+
+# Keep empty directories
+!.gitkeep
+
+# Don't ignore Makefile
+!makefile
+!Makefile
+
+# Ignore PDF documentation (contains confidential academic info)
+rapport.pdf
+latex/
