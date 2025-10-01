@@ -315,11 +315,3 @@ Special thanks to:
 This project is available under the MIT License. See [LICENSE](LICENSE) for details.
 
 ---
-
-<div align="center">
-
-**Made with ❤️ at INSA Rouen Normandie**
-
-⭐ Star this repo if you found it helpful!
-
-</div>
