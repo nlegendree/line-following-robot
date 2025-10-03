@@ -302,13 +302,6 @@ This project was developed collaboratively by a **team of four engineering stude
 **Academic Year**: 2023-2024
 **Institution**: [INSA Rouen Normandie](https://www.insa-rouen.fr/)
 
-## 🎓 Acknowledgments
-
-Special thanks to:
-
-- Our project supervisor for guidance and support
-- INSA Rouen Normandie Electronics Department for lab resources and equipment
-- Rocket League for design inspiration (3D chassis model)
 
 ## 📄 License
 
